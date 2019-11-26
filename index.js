@@ -1,5 +1,6 @@
 const {resolve} = require('path');
 const express = require('express');
+const cookieParser = require('cookie-parser');
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -11,6 +12,11 @@ const app = express();
 
 // Set up middleware
 app.use(express.json());
+
+app.use(cookieParser());
+
+app.use(express.static('public'));
+app.use('/images', express.static(__dirname + '/images'));
 
 app.use(express.urlencoded({
   extended: true

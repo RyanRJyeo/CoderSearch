@@ -47,6 +47,19 @@ pool.on('error', function (err) {
   console.log('idle client error', err.message, err.stack);
 });
 
+//=======================================================
+
+var cloudinary = require('cloudinary');
+
+var configForCloudinary;
+if( process.env.CLOUDINARY_URL ){   //FOR HEROKU
+  configForCloudinary = process.env.CLOUDINARY_URL;
+
+}else{ // FOR LOCAL
+  configForCloudinary = require("./config.json");
+}
+cloudinary.config(configForCloudinary);
+
 
 
 /*
@@ -62,9 +75,9 @@ pool.on('error', function (err) {
  */
 
 
-const allPokemonModelsFunction = require('./models/pokemon');
+const allCodersearchModelsFunction = require('./models/codersearch');
 
-const pokemonModelsObject = allPokemonModelsFunction( pool );
+const codersearchModelsObject = allCodersearchModelsFunction( pool );
 
 
 
@@ -95,5 +108,5 @@ module.exports = {
    */
 
   // users: userModelsObject,
-  pokemon: pokemonModelsObject
+  codersearch: codersearchModelsObject
 };

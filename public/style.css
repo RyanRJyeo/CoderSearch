@@ -1,0 +1,167 @@
+.navbar-brand{
+	font-size: 25px;
+	margin-left: 30%;
+}
+
+.blue{
+	color: #6C61F6;
+}
+
+.showcase{
+	background-image: url("images/showcase.jpg");
+	background-position: bottom;
+	background-repeat:  no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	height: 60vh;
+
+}
+
+.search{
+	width: 400px;
+	height: 400px;
+}
+
+.search2{
+	width: 400px;
+}
+
+.showcase2{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.showcase3{
+	background-image: url("images/showcase2.jpeg");
+	background-position: bottom;
+	background-repeat:  no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	height: 60vh;
+}
+
+.showcase4{
+	margin-bottom: 10%;
+}
+
+
+.buttons{
+	margin: 10% 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.formzz{
+	background-color: #8985A8;
+	border-radius: 10px;
+	box-shadow: 5px 10px 10px;
+	padding: 30px;
+	width: 400px;
+}
+
+.formzz2{
+	background-color: #8985A8;
+	border-radius: 10px;
+	box-shadow: -5px 10px 10px;
+	padding: 30px;
+	width: 400px;
+}
+
+.formTitle{
+	color: white;
+	text-align: center;
+}
+
+.btn-outline-primary{
+	color: #6C61F6;
+	border: 2px solid #6C61F6;
+}
+
+.btn-outline-primary:hover{
+	background-color: #6C61F6;
+	border: 2px solid #6C61F6;
+	color: white;
+}
+
+.btn-outline-primary:focus{
+	box-shadow: none;
+}
+
+@media only screen and (max-width: 700px) {
+
+	.navbar-brand{
+		font-size: 20px;
+		margin-left: 10%;
+	}
+
+	.showcase{
+		background-image: url("images/showcase.jpg");
+		background-position: top;
+		background-repeat: no-repeat;
+		background-attachment: fixed;
+		background-size: 100% 40%;
+		height: 30vh;
+	}
+
+
+	.showcase2{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+
+	.search{
+		width: 80%;
+	}
+
+	.search2{
+		width: 80%;
+	}
+
+	.showcase3{
+		display: none;
+	}
+
+
+
+	.buttons{
+		margin: 10% auto;
+		width: 80%;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#searcherForm{
+		display: flex;
+		flex-direction: column-reverse;
+		justify-content: center;
+		align-items: center;
+	}
+
+
+	.formzz{
+		background-color: #8985A8;
+		border-radius: 10px;
+		box-shadow: 5px 10px 10px;
+		padding: 30px;
+		width: 90%;
+	}
+
+	.formzz2{
+		background-color: #8985A8;
+		border-radius: 10px;
+		box-shadow: -5px 10px 10px;
+		padding: 30px;
+		width: 90%;
+	}
+
+
+}
