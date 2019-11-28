@@ -3,8 +3,38 @@
 	margin-left: 30%;
 }
 
+.navbar-toggler{
+	border: none !important;
+}
+
+.navbar-toggler:focus{
+	outline: none;
+}
+
+.navBurger{
+	color: #6C61F6;
+}
+
 .blue{
 	color: #6C61F6;
+}
+
+.alert{
+	margin: 0;
+}
+
+.modal-content{
+	background:rgba(255, 255, 255, 0.9) !important;
+}
+
+.navlink{
+	color: inherit;
+	text-decoration: none;
+}
+
+.navlink:hover{
+	color: inherit;
+	text-decoration: none;
 }
 
 .showcase{
@@ -14,12 +44,12 @@
 	background-attachment: fixed;
 	background-size: cover;
 	height: 60vh;
-
 }
 
 .search{
 	width: 400px;
 	height: 400px;
+	margin: 0 5%;
 }
 
 .search2{
@@ -76,20 +106,84 @@
 	text-align: center;
 }
 
-.btn-outline-primary{
-	color: #6C61F6;
-	border: 2px solid #6C61F6;
+.button-outline-light{
+	border: 1px solid white;
+	color: white;
 }
 
-.btn-outline-primary:hover{
+.button-outline-light:hover{
+	color: #6C61F6;
+	background: white;
+}
+
+.button-outline-light:focus{
+	box-shadow: none;
+}
+
+.button-outline-primary{
+	border: 2px solid #6C61F6;
+	color: #6C61F6;
+}
+
+.button-outline-primary:hover{
 	background-color: #6C61F6;
 	border: 2px solid #6C61F6;
 	color: white;
 }
 
-.btn-outline-primary:focus{
+.button-outline-primary:focus{
 	box-shadow: none;
 }
+
+.button-primary{
+	background-color: #6C61F6;
+	border: 2px solid #6C61F6;
+	color: white;
+}
+
+.button-primary:hover{
+	background-color: white;
+	border: 2px solid #6C61F6;
+	color: #6C61F6;
+}
+
+.button-primary:focus{
+	box-shadow: none;
+}
+
+.editProfilePic{
+	max-width: 12rem !important;
+	max-height: 14rem !important;
+	margin: 0 auto;
+}
+
+
+#inputStreet {
+  width: 100%;
+}
+
+#inputCity {
+	display: inline-block;
+	margin: 2% 0;
+  width: 40%;
+}
+
+#inputState {
+	display: inline-block;
+	margin: 2% 0;
+  width: 30%;
+}
+
+#inputZip {
+	display: inline-block;
+	margin: 2% 0;
+  width: 30%;
+}
+
+#inputCountry {
+  width: 100%;
+}
+
 
 @media only screen and (max-width: 700px) {
 
@@ -118,6 +212,7 @@
 
 	.search{
 		width: 80%;
+		margin: 0;
 	}
 
 	.search2{
@@ -127,8 +222,6 @@
 	.showcase3{
 		display: none;
 	}
-
-
 
 	.buttons{
 		margin: 10% auto;

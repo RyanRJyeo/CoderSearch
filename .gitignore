@@ -100,3 +100,6 @@ Temporary Items
 
 config.json
 salt.json
+api.json
+
+/public/geocode.js
