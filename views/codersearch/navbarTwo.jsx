@@ -23,12 +23,15 @@ class NavbarTwo extends React.Component {
                     <ul className="navbar-nav mr-auto">
 
                     </ul>
-                    <button type="button" id="nav-logout" className="btn btn-outline-secondary mt-2 mb-2 mr-5">
-                      <a class="navlink" href="/logout">Log Out</a>
+                    <button type="button" id="reactNav" className="btn button-outline-primary mt-2 mb-2 mr-5">
+                      Discover <i class='bx bx-search-alt'></i>
+                    </button>
+                    <button type="button" id="logoutNav" className="btn btn-outline-secondary mt-2 mb-2 mr-5">
+                      Log Out
                     </button>
                   </div>
                 </nav>
-
+                <script src="navigation.js"></script>
             </header>
         </html>
     );

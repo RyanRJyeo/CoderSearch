@@ -65,7 +65,7 @@ class SearcherEdit extends React.Component {
 
                 <form className="col align-self-center" method='POST' action='/saveProfile'>
                   <div className="form-group">
-                    <input type="number" className="form-control rounded" readonly="true" name="coder_id" value={this.props.results[0].id} required/>
+                    <input type="number" className="form-control rounded d-none" readonly="true" name="coder_id" value={this.props.results[0].id} required/>
                   </div>
                   <div className="form-group">
                     <p>Name:</p>

@@ -318,6 +318,54 @@ module.exports = (dbPoolInstance) => {
   }
 
 
+  const getAllSearchers = async () => {
+    try{
+        const inputValues = [];
+        console.log(inputValues);
+        const query = 'SELECT * FROM searchers';
+
+        const queryResult = await dbPoolInstance.query(query,inputValues);
+
+        if( queryResult.rows.length > 0 ){
+          return queryResult.rows;
+
+        }else{
+          return Promise.reject(new Error("codersearch#getAllSearchers return null"))
+
+        // if allow return empty array, do this: return [];
+
+        }
+
+    }catch(error){
+        console.log("codersearch#getAllSearchers model error "+error);
+    }
+  }
+
+
+
+  const getAllCoders = async () => {
+    try{
+        const inputValues = [];
+        console.log(inputValues);
+        const query = 'SELECT * FROM coders';
+
+        const queryResult = await dbPoolInstance.query(query,inputValues);
+
+        if( queryResult.rows.length > 0 ){
+          return queryResult.rows;
+
+        }else{
+          return Promise.reject(new Error("codersearch#getAllCoders return null"))
+
+        // if allow return empty array, do this: return [];
+
+        }
+
+    }catch(error){
+        console.log("codersearch#getAllCoders model error "+error);
+    }
+  }
+
 
 
   return {
@@ -333,5 +381,7 @@ module.exports = (dbPoolInstance) => {
     getPwChangedSearcher,
     getPPChangedCoder,
     getPPChangedSearcher,
+    getAllSearchers,
+    getAllCoders,
   };
 };

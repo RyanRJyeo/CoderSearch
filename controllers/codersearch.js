@@ -117,10 +117,9 @@ module.exports = (db) => {
 
         const email = request.body.email;
         const password = request.body.password;
+        const hashedpassword = sha256(SALT + password);
 
         const results = await db.codersearch.getCoderLoggedIn(email);
-
-        const hashedpassword = sha256(SALT + password);
 
         if (hashedpassword === results[0].password){
             const id = results[0].id;
@@ -131,6 +130,8 @@ module.exports = (db) => {
             response.cookie('hasLoggedIn', hashedcookie);
 
             response.redirect('/editProfile');
+        } else {
+            response.status(403).render('codersearch/errorLogin');
         }
 
     } catch(error){
@@ -149,10 +150,9 @@ module.exports = (db) => {
 
         const email = request.body.email;
         const password = request.body.password;
+        const hashedpassword = sha256(SALT + password);
 
         const results = await db.codersearch.getSearcherLoggedIn(email)
-
-        const hashedpassword = sha256(SALT + password);
 
         if (hashedpassword === results[0].password){
             const id = results[0].id;
@@ -163,6 +163,8 @@ module.exports = (db) => {
             response.cookie('hasLoggedIn', hashedcookie);
 
             response.redirect('/editProfile');
+        } else {
+            response.status(403).render('codersearch/errorLogin');
         }
 
     }catch(error){
@@ -453,6 +455,52 @@ module.exports = (db) => {
 
 
 
+// ============================================================
+  const reactInfoCC = async (request,response) => {
+    try{
+
+        const coder_id = request.cookies['coder_id'];
+        const hashedCoder = sha256( SALT + coder_id );
+        const searcher_id = request.cookies['searcher_id'];
+        const hashedSearcher = sha256( SALT + searcher_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedCoder ){
+
+            const coders = await db.codersearch.getCoder(coder_id);
+            const searchers = await db.codersearch.getAllSearchers();
+
+            let data = {
+                coders: coders,
+                searchers: searchers
+            }
+
+            response.send(data);
+
+        } else if ( request.cookies['hasLoggedIn'] === hashedSearcher ){
+
+            const coders = await db.codersearch.getAllCoders();
+            const searchers = await db.codersearch.getSearcher(searcher_id);
+
+            let data = {
+                coders: coders,
+                searchers: searchers
+            }
+
+            response.send(data);
+
+        } else {
+            response.redirect('/');
+        }
+
+
+    }catch(error){
+        console.log("codersearch#reactInfoCC controller error "+ error);
+    }
+  }
+// ============================================================
+
+
+
 
 
 
@@ -473,6 +521,7 @@ module.exports = (db) => {
     saveProfile: saveProfileCC,
     changePassword: changePasswordCC,
     changeProfilePic: changeProfilePicCC,
+    reactInfo: reactInfoCC,
   };
 
 }

@@ -33,4 +33,7 @@ module.exports = (app, allModels) => {
   app.post('/changePassword', codersearchCC.changePassword);
   app.post('/changeProfilePic', upload.single('myFile'), codersearchCC.changeProfilePic);
 
+
+  app.get('/reactInfo.json', codersearchCC.reactInfo);
+
 };
