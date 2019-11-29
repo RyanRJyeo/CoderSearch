@@ -4,7 +4,7 @@ import axios from 'axios';
 import styles from './style.scss';
 import { Redirect } from 'react-router-dom'
 
-import Form from './components/form/form';
+import Mapz from './components/mapz/mapz';
 
 class App extends React.Component {
 
@@ -28,11 +28,12 @@ class App extends React.Component {
 
           const data = response.data
 
-          console.log(data)
-
           this.setState({ coders: data.coders });
 
           this.setState({ searchers: data.searchers });
+
+          console.log("App states")
+          console.log(this.state)
 
         }).catch((error)=>{
           console.log(error);
@@ -42,22 +43,18 @@ class App extends React.Component {
 
   render() {
 
-
-    console.log("doing Axios call now")
     if (this.state.counter < 1){
 
         this.setState({ counter: this.state.counter + 1});
         this.getMapInfo();
 
     };
-    console.log("Axios done")
-    console.log(this.state)
+
 
 
     return (
       <div>
-        <Form />
-        Welcome.
+        <Mapz coders={this.state.coders} searchers ={this.state.searchers} />
       </div>
     );
   }
