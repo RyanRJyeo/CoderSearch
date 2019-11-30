@@ -139,7 +139,6 @@ export default function Mapz(infoFromApp){
                     latitude={parseFloat(selectedButton.lat)}
                     longitude={parseFloat(selectedButton.long)}
                     closeButton={false}
-                    className={styles.popupButton}
                 >
                     <div>
                         <div className={styles.closeButton}>

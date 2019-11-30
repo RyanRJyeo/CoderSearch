@@ -95,11 +95,9 @@ class App extends React.Component {
             console.log(this.state)
         }
 
-        this.setState({ userInput: "$@1371263!@#!%@^#!&657" })
 
         }).catch((error)=>{
           console.log(error);
-          this.setState({ userInput: "$@1371263!@#!%@^#!&657" })
         })
 
     }
