@@ -263,17 +263,13 @@ module.exports = (db) => {
             const geocoder = NodeGeocoder(options);
             let lat;
             let long;
-            geocoder.geocode(address)
-              .then(async function(res) {
+            geocoder.geocode({address: (street + " " + city ), country: country, zipcode: zip}, async function(err, res) {
                 console.log(res[0]);
-                lat = res[0].latitude.toString();
-                long = res[0].longitude.toString();
+                lat = res[0].latitude;
+                long = res[0].longitude;
                 const results = await db.codersearch.getCoderSaved(id, name, occupation, language, framework, description, street, city, state, zip, country, address, lat, long);
                 response.redirect('/editProfile');
-              })
-              .catch(function(err) {
-                console.log(err);
-              });
+            });
 
             console.log("Geocoding done");
 
@@ -310,17 +306,24 @@ module.exports = (db) => {
             const geocoder = NodeGeocoder(options);
             let lat;
             let long;
-            geocoder.geocode(address)
-              .then(async function(res) {
+            geocoder.geocode({address: (street + " " + city ), country: country, zipcode: zip}, async function(err, res) {
                 console.log(res[0]);
-                lat = res[0].latitude.toString();
-                long = res[0].longitude.toString();
-                const results = await db.codersearch.getSearcherSaved(id, name, language, framework, description, street, city, state, zip, country, address, lat, long);
+                lat = res[0].latitude;
+                long = res[0].longitude;
+                const results = await db.codersearch.getSearcherSaved(id, name, occupation, language, framework, description, street, city, state, zip, country, address, lat, long);
                 response.redirect('/editProfile');
-              })
-              .catch(function(err) {
-                console.log(err);
-              });
+            });
+            // geocoder.geocode(address)
+            //   .then(async function(res) {
+            //     console.log(res[0]);
+            //     lat = res[0].latitude;
+            //     long = res[0].longitude;
+            //     const results = await db.codersearch.getSearcherSaved(id, name, language, framework, description, street, city, state, zip, country, address, lat, long);
+            //     response.redirect('/editProfile');
+            //   })
+            //   .catch(function(err) {
+            //     console.log(err);
+            //   });
 
             console.log("Geocoding done");
 

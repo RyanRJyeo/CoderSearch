@@ -1,16 +1,84 @@
-.name{
-  border: 10px solid blue;
-  padding:5px;
-  margin:20px;
+
+.coders{
+	border: 2px solid #6C61F6;
+	color: #6C61F6;
+	padding: 0;
 }
 
-.myclass{
-  margin:10px;
-  padding:30px;
-  background-color:#c5e0e3;
+.coders:hover{
+	background-color: #6C61F6;
+	border: 2px solid #6C61F6;
+	color: white;
 }
 
-.clicked{
-  background-color:grey;
+.coders:focus{
+	outline: none;
+	box-shadow: none;
+}
+
+.coderButton{
+	border: 2px solid #6C61F6;
+	color: #6C61F6;
+}
+
+.coderButton:hover{
+	background-color: #6C61F6;
+	border: 2px solid #6C61F6;
+	color: white;
+}
+
+.coderButton:focus{
+	outline: none;
+	box-shadow: none;
+}
+
+.skills{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-around;
+	width: 400px;
+}
+
+.closeButton{
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+.closeButton button{
+	background: none;
+	border: none;
+}
+
+.occupation{
+	color: #6C61F6;
+}
+
+.mapDislaimer{
+	text-align: right;
+	margin-right: 10px;
+}
+
+
+@media only screen and (max-width: 700px) {
+
+	h3{
+		font-size: 20px;
+	}
+
+	.skills{
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		width: 200px;
+		font-size: 10px;
+	}
+
+	small{
+		font-size: 7px;
+	}
+
+	.skills p{
+		margin: 1%;
+	}
 
 }

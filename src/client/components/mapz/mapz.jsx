@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import classnames from 'classnames';
 
 import styles from './style.scss';
 
-import ReactMapGL from "react-map-gl"
+import ReactMapGL, {Marker, Popup, NavigationControl} from "react-map-gl"
 
 const MapToken  = require("../../../../map.json")
 
@@ -12,6 +12,9 @@ const cx = classnames.bind(styles)
 
 export default function Mapz(infoFromApp){
 
+// ====================================================================
+//                 Setting up React-Map-GL
+// ====================================================================
     const [viewport, setViewport] = useState({
         latitude: 0,
         longitude: 0,
@@ -20,11 +23,94 @@ export default function Mapz(infoFromApp){
         zoom: 0
     })
 
+    const [selectedButton, setSelectedButton] = useState(null);
+
+    useEffect(() => {
+        const listener = (e) => {
+            if(e.key === "Escape"){
+                setSelectedButton(null);
+            }
+        };
+        window.addEventListener("keydown", listener);
+
+
+        return () => {
+            window.removeEventListener("keydown", listener);
+        }
+
+
+    }, []);
+// ====================================================================
+
+
+
+
+
+// ====================================================================
+//              Plotting markers on the map
+// ====================================================================
     if (infoFromApp.coders && infoFromApp.searchers){
         console.log({infoFromApp})
     }
 
-    const MapInfo = infoFromApp;
+
+    let mapInfo = {
+        coders: [],
+        searchers: []
+    };
+    if(infoFromApp.coders && infoFromApp.searchers){
+        mapInfo = infoFromApp;
+    };
+
+
+
+
+        let coders = mapInfo.coders.map(x =>{
+            if(x.lat){
+                return  <Marker
+                            key={x.id}
+                            latitude={parseFloat(x.lat)}
+                            longitude={parseFloat(x.long)}
+                        >
+                            <button
+                                className={styles.coders}
+                                onClick={e => {
+                                    e.preventDefault();
+                                    setSelectedButton(x);
+                                }}
+                            >
+                                <i className='bx bx-code bx-sm align-bottom'></i>
+                            </button>
+                        </Marker>
+            } else {
+                return null
+            };
+        });
+
+
+        let searchers = mapInfo.searchers.map(x =>{
+            if(x.lat){
+                return  <Marker
+                            key={x.id}
+                            latitude={parseFloat(x.lat)}
+                            longitude={parseFloat(x.long)}
+                        >
+                            <button
+                                className={styles.coders}
+                                onClick={e => {
+                                    e.preventDefault();
+                                    setSelectedButton(x);
+                                }}
+                            >
+                                <i className='bx bx-search-alt bx-sm align-bottom'></i>
+                            </button>
+                        </Marker>
+            } else {
+                return null
+            };
+        });
+// ====================================================================
+
 
     return (
       <div>
@@ -37,85 +123,50 @@ export default function Mapz(infoFromApp){
             }}
 
         >
-            {MapInfo.coders.map(x =>(
-                <Marker key={MapInfo.coders.id} latitude={MapInfo.coders.lat} longitude={MapInfo.coders.long}>
+
+            <div style={{position: 'absolute', right: 0}}>
+              <NavigationControl />
+            </div>
+            {coders}
+            {searchers}
+
+
+            {selectedButton ? (
+                <Popup
+                    latitude={parseFloat(selectedButton.lat)}
+                    longitude={parseFloat(selectedButton.long)}
+                    closeButton={false}
+                    className={styles.popupButton}
+                >
                     <div>
-                        WOOOOHOOOO
+                        <div className={styles.closeButton}>
+                            <button onClick={() => {setSelectedButton(null);}}><i className='bx bx-x bx-sm align-bottom'></i></button>
+                        </div>
+                        <h3>{selectedButton.name} <span className={styles.occupation}>{selectedButton.occupation_type}</span></h3>
+                        <div className={styles.skills}>
+                            <div>
+                                <p><strong>Languages:</strong></p>
+                                <p className={styles.border}>{selectedButton.language}</p>
+                            </div>
+                            <div>
+                                <p><strong>Frameworks:</strong></p>
+                                <p>{selectedButton.framework}</p>
+                            </div>
+                        </div>
+                        <small>{selectedButton.address}</small>
+                        <br/>
+                        <br/>
+                        <button className={styles.coderButton} onClick={()=>{console.log("ello")}}  >See More</button>
                     </div>
-                </Marker>
+                </Popup>
 
-
-            ))}
+            ) : null}
         </ReactMapGL>
+        <div className={styles.mapDislaimer}>
+            <small className="form-text text-muted">Map does not resize when the screen resizes</small>
+        </div>
       </div>
     );
 
 
 }
-
-
-
-
-
-// class Mapz extends React.Component {
-
-
-
-//   constructor(){
-//     super();
-
-//     this.state = {
-//       coders: "",
-//       searchers: "",
-//       counter: 0,
-//     };
-//   }
-
-
-
-//   getMapInfo(){
-
-//     this.setState({coders: this.props.coders})
-//     this.setState({searchers: this.props.searchers})
-
-//   }
-
-
-
-
-
-
-//   clickHandler(){
-
-//     this.setState({clicked:!this.state.clicked})
-//   }
-
-//   render() {
-
-//     // =================================================================================
-//     //                      Change css dynamically
-//     // =================================================================================
-//     // calling cx sets all the styles on the element in the display variable
-//     const display = cx(
-//       styles.myclass, // styles that never change
-//       { // dynamic styles
-//         [styles.clicked]: this.state.clicked // make the key the style name, and the value the dynamic boolean
-//       }
-//     )
-//     // <button onClick={()=>{this.clickHandler()}}>click to change</button>
-//     // =================================================================================
-
-
-//     if(this.props.coders && this.props.searchers){
-//         if(this.state.counter < 1){
-//             this.setState({counter: this.state.counter + 1})
-//             this.getMapInfo();
-//         }
-//     }
-
-//     console.log(this.state)
-
-//   }
-// }
-
-// export default Mapz;
