@@ -13,3 +13,10 @@ WHERE id = ($1);
 
 
 --  ===================================
+
+
+
+
+INSERT INTO coders
+(email, password, occupation_type, name, image, language, framework, description, street, city, state, zip, country, address, lat, long)
+VALUES ($1, $2, $3, $4, $5)

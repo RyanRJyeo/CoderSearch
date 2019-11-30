@@ -474,7 +474,8 @@ module.exports = (db) => {
 
             let data = {
                 coders: coders,
-                searchers: searchers
+                searchers: searchers,
+                loggedIn: "coders"
             }
 
             response.send(data);
@@ -486,7 +487,8 @@ module.exports = (db) => {
 
             let data = {
                 coders: coders,
-                searchers: searchers
+                searchers: searchers,
+                loggedIn: "searchers"
             }
 
             response.send(data);

@@ -16,37 +16,42 @@ class App extends React.Component {
             counter: 0,
             coders: "",
             searchers: "",
-            userInput: "",
+            userInput: "$@1371263!@#!%@^#!&657",
+            loggedIn: "",
         };
     };
 
-    // getMapInfo(){
+    getMapInfo(){
 
-    //   const url = '/reactInfo.json';
+      const url = '/reactInfo.json';
 
-    //   axios.get(url)
-    //     .then((response) => {
+      axios.get(url)
+        .then((response) => {
 
-    //       const data = response.data
+          const data = response.data
 
-    //       this.setState({ coders: data.coders });
+          if(data.loggedIn === "coders"){
+            this.setState({ coders: data.coders });
+            this.setState({ loggedIn: data.loggedIn });
+        } else {
+            this.setState({ searchers: data.searchers });
+            this.setState({ loggedIn: data.loggedIn });
+        }
 
-    //       this.setState({ searchers: data.searchers });
+          console.log("Initial states")
+          console.log(this.state)
 
-    //       console.log("App states")
-    //       console.log(this.state)
-    //       console.log(data)
-
-    //     }).catch((error)=>{
-    //       console.log(error);
-    //     })
-    // }
+        }).catch((error)=>{
+          console.log(error);
+        })
+    }
 
 
     getUserInput(event){
 
-        console.log(event.target.value)
         this.setState({ userInput: event.target.value })
+        console.log("userInput")
+        console.log(this.state.userInput)
 
     }
 
@@ -57,55 +62,61 @@ class App extends React.Component {
       axios.get(url)
         .then((response) => {
 
-          const data = response.data
-          console.log(data)
-          let coders = []
-          for(let i=0; i < data.coders.length; i++){
-            if (data.coders[i].language){
-                if(data.coders[i].language.includes(this.state.userInput) || data.coders[i].framework.includes(this.state.userInput) || data.coders[i].address.includes(this.state.userInput)){
-                    coders.push(data.coders[i])
+        const data = response.data
+        console.log(data)
+        if (this.state.userInput === ""){
+            this.setState({ userInput: "$@1371263!@#!%@^#!&657" })
+        }
+
+        let searchers = []
+        let coders = []
+
+        if(data.loggedIn === "coders"){
+            for(let i=0; i < data.searchers.length; i++){
+                if (data.searchers[i].language){
+                    if(data.searchers[i].language.includes(this.state.userInput) || data.searchers[i].framework.includes(this.state.userInput) || data.searchers[i].address.includes(this.state.userInput)){
+                        searchers.push(data.searchers[i])
+                    }
                 }
             }
-          }
-
-          let searchers = []
-          for(let i=0; i < data.searchers.length; i++){
-            if (data.searchers[i].language){
-                if(data.searchers[i].language.includes(this.state.userInput) || data.searchers[i].framework.includes(this.state.userInput) || data.searchers[i].address.includes(this.state.userInput)){
-                    searchers.push(data.searchers[i])
+            this.setState({ searchers: searchers });
+            console.log("Adding searchers and removing userInput")
+            console.log(this.state)
+        } else {
+            for(let i=0; i < data.coders.length; i++){
+                if (data.coders[i].language){
+                    if(data.coders[i].language.includes(this.state.userInput) || data.coders[i].framework.includes(this.state.userInput) || data.coders[i].address.includes(this.state.userInput)){
+                        coders.push(data.coders[i])
+                    }
                 }
             }
-          }
+            this.setState({ coders: coders });
+            console.log("Adding coders and removing userInput")
+            console.log(this.state)
+        }
 
-          this.setState({ coders: coders });
-
-          this.setState({ searchers: searchers });
-
-          console.log("Reset states")
-          console.log(this.state)
+        this.setState({ userInput: "$@1371263!@#!%@^#!&657" })
 
         }).catch((error)=>{
           console.log(error);
+          this.setState({ userInput: "$@1371263!@#!%@^#!&657" })
         })
-
-      this.setState({ userInput: "" })
 
     }
 
-
   render() {
 
-    // if (this.state.counter < 1){
+    if (this.state.counter < 1){
 
-    //     this.setState({ counter: this.state.counter + 1});
-    //     this.getMapInfo();
+        this.setState({ counter: this.state.counter + 1});
+        this.getMapInfo();
 
-    // };
+    };
 
     return (
       <div>
         <Mapz coders={this.state.coders} searchers ={this.state.searchers} />
-        <Results getUserInput={(event) => this.getUserInput(event)} searchNow={() => this.searchNow()} />
+        <Results loggedIn={this.state.loggedIn} coders={this.state.coders} searchers={this.state.searchers} getUserInput={(event) => this.getUserInput(event)} searchNow={() => this.searchNow()} />
       </div>
     );
   }

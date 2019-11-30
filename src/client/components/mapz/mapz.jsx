@@ -58,57 +58,60 @@ export default function Mapz(infoFromApp){
         coders: [],
         searchers: []
     };
-    if(infoFromApp.coders && infoFromApp.searchers){
+    if(infoFromApp.coders || infoFromApp.searchers){
         mapInfo = infoFromApp;
     };
 
+    let coders = null
+    if(mapInfo.coders[0]){
+        coders =    mapInfo.coders.map(x =>{
+                        if(x.lat){
+                            return  <Marker
+                                        key={x.id}
+                                        latitude={parseFloat(x.lat)}
+                                        longitude={parseFloat(x.long)}
+                                    >
+                                        <button
+                                            className={styles.coders}
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                setSelectedButton(x);
+                                            }}
+                                        >
+                                            <i className='bx bx-code bx-sm align-bottom'></i>
+                                        </button>
+                                    </Marker>
+                        } else {
+                            return null
+                        };
+                    });
+    };
 
+    let searchers = null
+    if(mapInfo.searchers[0]){
+        searchers = mapInfo.searchers.map(x =>{
+                        if(x.lat){
+                            return  <Marker
+                                        key={x.id}
+                                        latitude={parseFloat(x.lat)}
+                                        longitude={parseFloat(x.long)}
+                                    >
+                                        <button
+                                            className={styles.coders}
+                                            onClick={e => {
+                                                e.preventDefault();
+                                                setSelectedButton(x);
+                                            }}
+                                        >
+                                            <i className='bx bx-search-alt bx-sm align-bottom'></i>
+                                        </button>
+                                    </Marker>
+                        } else {
+                            return null
+                        };
+                    });
+    }
 
-
-        let coders = mapInfo.coders.map(x =>{
-            if(x.lat){
-                return  <Marker
-                            key={x.id}
-                            latitude={parseFloat(x.lat)}
-                            longitude={parseFloat(x.long)}
-                        >
-                            <button
-                                className={styles.coders}
-                                onClick={e => {
-                                    e.preventDefault();
-                                    setSelectedButton(x);
-                                }}
-                            >
-                                <i className='bx bx-code bx-sm align-bottom'></i>
-                            </button>
-                        </Marker>
-            } else {
-                return null
-            };
-        });
-
-
-        let searchers = mapInfo.searchers.map(x =>{
-            if(x.lat){
-                return  <Marker
-                            key={x.id}
-                            latitude={parseFloat(x.lat)}
-                            longitude={parseFloat(x.long)}
-                        >
-                            <button
-                                className={styles.coders}
-                                onClick={e => {
-                                    e.preventDefault();
-                                    setSelectedButton(x);
-                                }}
-                            >
-                                <i className='bx bx-search-alt bx-sm align-bottom'></i>
-                            </button>
-                        </Marker>
-            } else {
-                return null
-            };
-        });
 // ====================================================================
 
 
@@ -153,7 +156,7 @@ export default function Mapz(infoFromApp){
                                 <p>{selectedButton.framework}</p>
                             </div>
                         </div>
-                        <small>{selectedButton.address}</small>
+                        <small>{selectedButton.street} {selectedButton.city} {selectedButton.country}</small>
                         <br/>
                         <br/>
                         <button className={styles.coderButton} onClick={()=>{console.log("ello")}}  >See More</button>
