@@ -115,6 +115,14 @@ export default function Mapz(infoFromApp){
 // ====================================================================
 
 
+    const handleClick = function(event){
+        infoFromApp.selectedProfile(event);
+        infoFromApp.showProfile();
+    }
+
+
+
+
     return (
       <div>
         <ReactMapGL
@@ -158,7 +166,7 @@ export default function Mapz(infoFromApp){
                         <small>{selectedButton.street} {selectedButton.city} {selectedButton.country}</small>
                         <br/>
                         <br/>
-                        <button className={styles.coderButton} onClick={()=>{console.log("ello")}}  >See More</button>
+                        <button value={selectedButton.id} className={styles.coderButton} onClick={(event)=> handleClick(event)}  >See More</button>
                     </div>
                 </Popup>
 

@@ -23,8 +23,6 @@ class Show extends React.Component {
     let profile = null;
     if(this.state.counter < 1){
         if(this.props.selectedProfile.length === 1){
-            // this.setState({ counter: 1});
-            console.log("lalalalal")
             profile = this.props.selectedProfile.map(x=>{
                 return  <div>
                             <div className="card">

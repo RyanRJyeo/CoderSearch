@@ -201,7 +201,12 @@ class App extends React.Component {
 
     return (
       <div>
-        <Mapz coders={this.state.coders} searchers ={this.state.searchers} />
+        <Mapz
+            coders={this.state.coders}
+            searchers ={this.state.searchers}
+            selectedProfile={(event)=> this.selectedProfile(event)}
+            showProfile={()=> this.showProfile()}
+        />
         <div className={styles.flex}>
             <div className={displayS}>
                 <Results
