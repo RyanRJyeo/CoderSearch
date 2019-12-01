@@ -310,20 +310,9 @@ module.exports = (db) => {
                 console.log(res[0]);
                 lat = res[0].latitude;
                 long = res[0].longitude;
-                const results = await db.codersearch.getSearcherSaved(id, name, occupation, language, framework, description, street, city, state, zip, country, address, lat, long);
+                const results = await db.codersearch.getSearcherSaved(id, name, language, framework, description, street, city, state, zip, country, address, lat, long);
                 response.redirect('/editProfile');
             });
-            // geocoder.geocode(address)
-            //   .then(async function(res) {
-            //     console.log(res[0]);
-            //     lat = res[0].latitude;
-            //     long = res[0].longitude;
-            //     const results = await db.codersearch.getSearcherSaved(id, name, language, framework, description, street, city, state, zip, country, address, lat, long);
-            //     response.redirect('/editProfile');
-            //   })
-            //   .catch(function(err) {
-            //     console.log(err);
-            //   });
 
             console.log("Geocoding done");
 

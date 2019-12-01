@@ -18,42 +18,60 @@ class Results extends React.Component {
     };
 
 
-    getResults(){
-
-        if(this.props.loggedIn === "coders"){
-            this.setState({ results: this.props.searchers });
-        } else {
-            this.setState({ results: this.props.coders });
-        }
-
-
-
+    handleClick(event){
+        this.props.selectedProfile(event);
+        this.props.showProfile();
     }
+
 
 
   render() {
 
 
     let results = null;
-    if(this.props.searchers){
-        results = this.props.searchers.map(x =>{
-            return  <div>
-                        <div className="card bg-light mt-4 mb-3">
-                          <div className="card-body">
-                            <h5 className="card-title">{x.name}</h5>
-                            <p className="card-text">{x.language}</p>
-                            <p className="card-text">{x.framework}</p>
-                            <p className="card-text"><small>{x.street} {x.city} {x.country}</small></p>
-                            <button className={styles.button}>See More</button>
-                          </div>
+    if(this.props.loggedIn === "coders"){
+        if(this.props.searchers){
+            results = this.props.searchers.map(x =>{
+                return  <div>
+                            <div className="card bg-light mt-4 mb-3">
+                              <div className="card-body">
+                                <h5 className="card-title">{x.name}</h5>
+                                <p className="card-text">{x.language}</p>
+                                <p className="card-text">{x.framework}</p>
+                                <p className="card-text"><small>{x.street} {x.city} {x.country}</small></p>
+                                <button value={x.id} onClick={(event)=> this.handleClick(event)} className={styles.button}>See More</button>
+                              </div>
+                            </div>
                         </div>
-                    </div>
-        })
+            });
+        };
+    } else {
+        if(this.props.coders){
+            results = this.props.coders.map(x =>{
+                return  <div>
+                            <div className="card bg-light mt-4 mb-3">
+                              <div className="card-body">
+                                <h5 className="card-title">{x.name} <span className={styles.purple}>{x.occupation_type}</span></h5>
+                                <p className="card-text"><b>Language:</b> {x.language}</p>
+                                <p className="card-text"><b>Framework:</b> {x.framework}</p>
+                                <p className="card-text"><small>{x.street} {x.city} {x.country}</small></p>
+                                <button value={x.id} onClick={(event)=> this.handleClick(event)}className={styles.button}>See More</button>
+                              </div>
+                            </div>
+                        </div>
+            });
+        };
     }
 
+
     return (
-      <div className={styles.results}>
+      <div>
           <div className={styles.form}>
+            <div className={styles.buttonGroup} role="group" aria-label="Basic example">
+              <button type="button" className={styles.button1} onClick={()=> this.props.showSearch()}>Search</button>
+              <button type="button" className={styles.button2} onClick={()=> this.props.showProfile()}>Profile</button>
+              <button type="button" className={styles.button3} onClick={()=> this.props.showConvo()}>Convo</button>
+            </div>
             <div className={styles.title}>
                 <h3>Start Your Search!</h3>
             </div>

@@ -45,7 +45,7 @@ class Navbar extends React.Component {
                           <span aria-hidden="true">&times;</span>
                         </button>
                         <form  method='POST' action='/loginCoder'>
-                          <h3 className="mb-4 text-center">Login Coder</h3>
+                          <h3 className="mb-4 text-center">Coder Login</h3>
                           <div className="form-group">
                             <input type="email" className="form-control rounded" name="email" placeholder="Email" required/>
                           </div>
@@ -70,7 +70,7 @@ class Navbar extends React.Component {
                           <span aria-hidden="true">&times;</span>
                         </button>
                         <form  method='POST' action='/loginSearcher'>
-                          <h3 className="mb-4 text-center">Login Searcher</h3>
+                          <h3 className="mb-4 text-center">Searcher Login</h3>
                           <div className="form-group">
                             <input type="email" className="form-control rounded" name="email" placeholder="Email" required/>
                           </div>

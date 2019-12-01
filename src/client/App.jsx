@@ -6,6 +6,12 @@ import { Redirect } from 'react-router-dom'
 
 import Mapz from './components/mapz/mapz';
 import Results from './components/results/results';
+import Show from './components/show/show';
+import Convo from './components/convo/convo';
+
+import classnames from 'classnames';
+
+const cx = classnames.bind(styles)
 
 class App extends React.Component {
 
@@ -18,6 +24,10 @@ class App extends React.Component {
             searchers: "",
             userInput: "$@1371263!@#!%@^#!&657",
             loggedIn: "",
+            hideSearch: false,
+            hideProfile: true,
+            hideConvo: true,
+            selectedProfile: [],
         };
     };
 
@@ -102,6 +112,62 @@ class App extends React.Component {
 
     }
 
+
+    selectedProfile(event){
+
+        let id = event.target.value
+        let selectedProfile = [];
+
+        const url = '/reactInfo.json';
+        axios.get(url)
+            .then((response) => {
+
+            const data = response.data
+
+            if(data.loggedIn === "coders"){
+                for(let i=0; i < data.searchers.length; i++){
+                    if(parseInt(data.searchers[i].id) === parseInt(id)){
+                        selectedProfile.push(data.searchers[i])
+                    }
+                }
+                this.setState({ selectedProfile: selectedProfile })
+            } else {
+                for(let i=0; i < data.coders.length; i++){
+                    if(parseInt(data.coders[i].id) === parseInt(id)){
+                        selectedProfile.push(data.coders[i])
+                    }
+                }
+                this.setState({ selectedProfile: selectedProfile })
+            }
+
+            console.log("selectedProfile state")
+            console.log(this.state)
+
+        }).catch((error)=>{
+            console.log(error);
+        })
+
+    }
+
+
+    showSearch(){
+        this.setState({ hideSearch: false })
+        this.setState({ hideProfile: true })
+        this.setState({ hideConvo: true })
+    }
+
+    showProfile(){
+        this.setState({ hideSearch: true })
+        this.setState({ hideProfile: false })
+        this.setState({ hideConvo: true })
+    }
+
+    showConvo(){
+        this.setState({ hideSearch: true })
+        this.setState({ hideProfile: true })
+        this.setState({ hideConvo: false })
+    }
+
   render() {
 
     if (this.state.counter < 1){
@@ -111,10 +177,78 @@ class App extends React.Component {
 
     };
 
+    // calling cx sets all the styles on the element in the display variable
+    const displayS= cx(
+      styles.main, // styles that never change
+      { // dynamic styles
+        [styles.other]: this.state.hideSearch // make the key the style name, and the value the dynamic boolean
+      }
+    )
+    // calling cx sets all the styles on the element in the display variable
+    const displayP= cx(
+      styles.main, // styles that never change
+      { // dynamic styles
+        [styles.other]: this.state.hideProfile // make the key the style name, and the value the dynamic boolean
+      }
+    )
+    // calling cx sets all the styles on the element in the display variable
+    const displayC= cx(
+      styles.main, // styles that never change
+      { // dynamic styles
+        [styles.other]: this.state.hideConvo // make the key the style name, and the value the dynamic boolean
+      }
+    )
+
     return (
       <div>
         <Mapz coders={this.state.coders} searchers ={this.state.searchers} />
-        <Results loggedIn={this.state.loggedIn} coders={this.state.coders} searchers={this.state.searchers} getUserInput={(event) => this.getUserInput(event)} searchNow={() => this.searchNow()} />
+        <div className={styles.flex}>
+            <div className={displayS}>
+                <Results
+                    // ========================================
+                    //          Toggle view button
+                    showSearch={()=> this.showSearch()}
+                    showProfile={()=> this.showProfile()}
+                    showConvo={()=> this.showConvo()}
+                    // ========================================
+                    // Get input from user for the map and results
+                    getUserInput={(event) => this.getUserInput(event)}
+                    searchNow={() => this.searchNow()}
+                    // ========================================
+                    // Displaying the results in results.jsx
+                    loggedIn={this.state.loggedIn}
+                    coders={this.state.coders}
+                    searchers={this.state.searchers}
+                    // ========================================
+                    // Choose one result to display full profile
+                    selectedProfile={(event)=> this.selectedProfile(event)}
+                    // ========================================
+                />
+            </div>
+            <div className={displayP}>
+                <Show
+                    // ========================================
+                    //          Toggle view button
+                    showSearch={()=> this.showSearch()}
+                    showProfile={()=> this.showProfile()}
+                    showConvo={()=> this.showConvo()}
+                    // ========================================
+                    //     Display this user's full profile
+                    selectedProfile={this.state.selectedProfile}
+                    // ========================================
+                />
+            </div>
+            <div className={displayC}>
+                <Convo
+                    // ========================================
+                    //          Toggle view button
+                    showSearch={()=> this.showSearch()}
+                    showProfile={()=> this.showProfile()}
+                    showConvo={()=> this.showConvo()}
+                    // ========================================
+                />
+            </div>
+        </div>
       </div>
     );
   }

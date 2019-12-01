@@ -1,0 +1,15 @@
+.flex{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin-bottom: 5%;
+}
+
+.main{
+	width: 90%;
+	z-index: 3;
+}
+
+.other{
+	display: none;
+}
