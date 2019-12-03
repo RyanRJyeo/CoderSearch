@@ -1,7 +1,6 @@
 const sha256 = require('js-sha256');
 var cloudinary = require('cloudinary');
 const NodeGeocoder = require('node-geocoder');
-const api = require('../api.json')
 
 module.exports = (db) => {
 
@@ -11,6 +10,14 @@ module.exports = (db) => {
     }else{
         SALT = require("../salt.json")
     }
+
+    let API;
+    if(process.env.API){
+        API = process.env.API
+    } else {
+        API = require('../api.json')
+    }
+
 
     let success;
     let coderName;
@@ -256,7 +263,7 @@ module.exports = (db) => {
 
               // Optional depending on the providers
               httpAdapter: 'http', // Default
-              apiKey: api, // for Mapquest, OpenCage, Google Premier
+              apiKey: API, // for Mapquest, OpenCage, Google Premier
               formatter: null         // 'gpx', 'string', ...
             };
 
@@ -299,7 +306,7 @@ module.exports = (db) => {
 
               // Optional depending on the providers
               httpAdapter: 'http', // Default
-              apiKey: api, // for Mapquest, OpenCage, Google Premier
+              apiKey: API, // for Mapquest, OpenCage, Google Premier
               formatter: null         // 'gpx', 'string', ...
             };
 
@@ -577,6 +584,7 @@ module.exports = (db) => {
     }
   }
 // ============================================================
+
 
 
 

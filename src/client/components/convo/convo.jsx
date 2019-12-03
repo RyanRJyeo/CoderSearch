@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import styles from './style.scss';
 
@@ -7,6 +7,8 @@ import classnames from 'classnames';
 import axios from 'axios';
 
 import socketIOClient from 'socket.io-client';
+
+import { animateScroll } from "react-scroll";
 
 const cx = classnames.bind(styles)
 
@@ -37,7 +39,7 @@ class Convo extends React.Component {
 
 
 // ============================================================================================
-//          GET INFO TO UPDATE STATE, NOT DONE YET STILL NEED TO EDIT THIS FUNCTION
+//                               GET INFO TO UPDATE STATE
 // ============================================================================================
     getCS(){
 
@@ -48,65 +50,67 @@ class Convo extends React.Component {
 
           const data = response.data
 
-          if(data.loggedIn === "coders"){
-            let searchers = []
-            for(let i=0; i < data.searchers.length; i++){
-                for(let j=0; j < this.props.convos.length; j++){
-                    if(data.searchers[i].id === this.props.convos[j].searcher_id){
-                        searchers.push({
-                            convo_id: this.props.convos[j].id,
-                            details: data.searchers[i]});
+              // IF CODERS LOGGED IN
+              if(data.loggedIn === "coders"){
+                    let searchers = []
+                    // FIND ALL SEARCHERS WHO'S ID EXIST IN THIS.PROPS.CONVOS
+                    for(let i=0; i < data.searchers.length; i++){
+                        for(let j=0; j < this.props.convos.length; j++){
+                            if(data.searchers[i].id === this.props.convos[j].searcher_id){
+                                searchers.push({
+                                    convo_id: this.props.convos[j].id,
+                                    details: data.searchers[i]});
+                            }
+                        }
                     }
-                }
-            }
-            let chats = []
-            for(let i=0; i < data.chats.length; i++){
-                for(let j=0; j < this.props.convos.length; j++){
-                    if(data.chats[i].convo_id === this.props.convos[j].id){
-                        chats.push(data.chats[i]);
+                    // FIND ALL CHATS THAT HAS CONVO_ID OF THIS.PROPS.CONVOS
+                    let chats = []
+                    for(let i=0; i < data.chats.length; i++){
+                        for(let j=0; j < this.props.convos.length; j++){
+                            if(data.chats[i].convo_id === this.props.convos[j].id){
+                                chats.push(data.chats[i]);
+                            }
+                        }
                     }
-                }
-            }
-
-            this.setState({
-                chats: chats,
-                searchers: searchers,
-                coders: data.coders,
-                loggedIn: data.loggedIn,
-                convos: response.data.convos
-            });
-        } else {
-            let coders = []
-            for(let i=0; i < data.coders.length; i++){
-                for(let j=0; j < this.props.convos.length; j++){
-                    if(data.coders[i].id === this.props.convos[j].coder_id){
-                        coders.push({
-                            convo_id: this.props.convos[j].id,
-                            details: data.coders[i]});
+                    // SET CHATS AND SEARCHERS STATES TO THE STUFF I GOT ABOVE, GET CODERS, LOGGED IN AND CONVOS STATE FROM THE AJAX DIRECTLY
+                    this.setState({
+                        chats: chats,
+                        searchers: searchers,
+                        coders: data.coders,
+                        loggedIn: data.loggedIn,
+                        convos: response.data.convos
+                    });
+              } else {
+                    // IF SEARCHERS LOGGED IN
+                    let coders = []
+                    // FIND ALL CODERS WHO'S ID EXIST IN THIS.PROPS.CONVOS
+                    for(let i=0; i < data.coders.length; i++){
+                        for(let j=0; j < this.props.convos.length; j++){
+                            if(data.coders[i].id === this.props.convos[j].coder_id){
+                                coders.push({
+                                    convo_id: this.props.convos[j].id,
+                                    details: data.coders[i]});
+                            }
+                        }
                     }
-                }
-            }
-            let chats = []
-            for(let i=0; i < data.chats.length; i++){
-                for(let j=0; j < this.props.convos.length; j++){
-                    if(data.chats[i].convo_id === this.props.convos[j].id){
-                        chats.push(data.chats[i]);
+                    // FIND ALL CHATS THAT HAS CONVO_ID OF THIS.PROPS.CONVOS
+                    let chats = []
+                    for(let i=0; i < data.chats.length; i++){
+                        for(let j=0; j < this.props.convos.length; j++){
+                            if(data.chats[i].convo_id === this.props.convos[j].id){
+                                chats.push(data.chats[i]);
+                            }
+                        }
                     }
-                }
+                    // SET CHATS AND CODERS STATES TO THE STUFF I GOT ABOVE, GET SEARCHERS, LOGGED IN AND CONVOS STATE FROM THE AJAX DIRECTLY
+                    this.setState({
+                        chats: chats,
+                        coders: coders,
+                        searchers: data.searchers,
+                        loggedIn: data.loggedIn,
+                        convos: response.data.convos
+                    });
             }
-            this.setState({
-                chats: chats,
-                coders: coders,
-                searchers: data.searchers,
-                loggedIn: data.loggedIn,
-                convos: response.data.convos
-            });
-        }
-
-
-
-          // console.log("Convo states")
-          // console.log(this.state)
 
         }).catch((error)=>{
           console.log(error);
@@ -123,7 +127,6 @@ class Convo extends React.Component {
     getChat(event){
 
         let result = event.target.value.split(",")
-        // console.log(result);
         if(this.state.loggedIn === "coders"){
             this.setState({currentChat: {
                     convo_id: result[0],
@@ -141,6 +144,7 @@ class Convo extends React.Component {
                     receiver_name: result[1],
                 }});
         };
+        this.scrollToBottom();
     };
 // ============================================================================================
 
@@ -183,9 +187,6 @@ class Convo extends React.Component {
 // ============================================================================================
 
 
-
-
-
 //                  SEND THE MESSAGE ACCORDING TO THESE PARAMS
 // ============================================================================================
     sendMessage(){
@@ -203,7 +204,6 @@ class Convo extends React.Component {
           })
           .then(response => {
             console.log(response);
-            // this.getCS();
             this.sendSocket();
             this.setState({ message: "" })
             console.log("ok can pass");
@@ -216,7 +216,7 @@ class Convo extends React.Component {
 // ============================================================================================
 
 
-//          RUN THIS FUNCTION WHEN THIS COMPONENT FIRST LOADS UP
+//     RUN THIS FUNCTION WHEN THIS COMPONENT FIRST LOADS UP(AJAX CALL, CONNECT TO SOCKET.IO)
 // ============================================================================================
     componentDidMount(){
         this.getCS();
@@ -226,8 +226,8 @@ class Convo extends React.Component {
                 if(value){
                     this.getCS();
                 }
-        })
-    }
+        });
+    };
 // ============================================================================================
 
 
@@ -235,29 +235,43 @@ class Convo extends React.Component {
 //       RUN THIS FUNCTION WHENEVER THAT PROPS THAT'S PASSED FROM APP.JSX CHANGES
 // ============================================================================================
     componentDidUpdate(prevProps){
-
         if (this.props.convos.length !== prevProps.convos.length) {
             this.getCS();
         }
-
     }
 // ============================================================================================
+
+
+
+//                          SCROLL TO BOTTOM OF THE DIV
+// ============================================================================================
+    scrollToBottom() {
+        animateScroll.scrollToBottom({
+          containerId: "ContainerElementID"
+        });
+    }
+// ============================================================================================
+
+
+
+//                        SEND MESSAGE IF KEYDOWN ON "ENTER"
+// ============================================================================================
+    checkKey(e) {
+        if(e.keyCode === 13 && e.target.value !== ""){
+            this.sendMessage();
+        }
+    }
+// ============================================================================================
+
 
 
 
   render() {
 
 
-// ============================================================================================
-
-// ============================================================================================
-
-
 
 //        SHOW ME THE CURRENT STATES FOR THIS COMPO AND SHOW THE CONVOS IF THEY EXISTS
 // ============================================================================================
-    // console.log("state chats")
-    // console.log(this.state)
     let convos = null;
     if(this.state.loggedIn !== ""){
         if(this.state.loggedIn === "coders"){
@@ -276,10 +290,13 @@ class Convo extends React.Component {
 
 
 
+// ============================================================================================
+// ============================================================================================
+//                THE WHOLE LAYOUT FOR THE CHAT MESSAGING STARTS HERE
+// ============================================================================================
+// ============================================================================================
 
-// ============================================================================================
-//                  THE WHOLE LAYOUT FOR THE CHAT MESSAGING IS HERE
-// ============================================================================================
+
 
 //                               FOR THE CHAT TITLE
 // ============================================================================================
@@ -290,8 +307,10 @@ class Convo extends React.Component {
 
 
 
-//               FOR EACH CHAT MESSAGE ITSELF !!!!!!(NOT DONE YET, NEED TO WORK ON THIS)!!!!!!!!!
+//                              FOR EACH CHAT MESSAGE ITSELF
 // ============================================================================================
+
+    // GET THE RELEVANT CHAT ACCORDING TO WHO THE USER SELECTED
     let chats = []
     if(this.state.chats.length > 0){
         for (let i=0; i < this.state.chats.length; i++){
@@ -300,33 +319,39 @@ class Convo extends React.Component {
             };
         };
     };
-    // console.log(chats)
+    // MAP THE ARRAY OF RELEVANT CHATS
     let allChats = null
     let whoissit = "rocket"
     if(chats.length > 0){
         allChats = chats.map(x =>{
             if(this.state.loggedIn === "coders"){
                 if(x.sender_name === this.state.coders[0].name && x.sender_id === this.state.coders[0].id){
+                    // IF ITS THE SENDER STYLE LIKE THIS
                     return  <div className={styles.sender}>
                                 <p className={styles.messageS}>{x.message} <small></small></p>
                             </div>
                 } else {
+                    // IF ITS THE RECEIVER STYLE LIKE THIS
                     return  <div className={styles.receiver}>
                                 <p className={styles.messageR}>{x.message} <small></small></p>
                             </div>
                 }
             } else {
                 if(x.receiver_name === this.state.searchers[0].name && x.receiver_id === this.state.searchers[0].id){
+                    // IF ITS THE RECEIVER STYLE LIKE THIS
                     return  <div className={styles.receiver}>
                                 <p className={styles.messageS}>{x.message} <small></small></p>
                             </div>
                 } else {
+                    // IF ITS THE SENDER STYLE LIKE THIS
                     return  <div className={styles.sender}>
                                 <p className={styles.messageR}>{x.message} <small></small></p>
                             </div>
                 }
             }
         })
+        // SCROLL TO BOTTOM WHEN ALL THIS DATA IS RETRIEVED
+        this.scrollToBottom();
     }
 
 
@@ -343,18 +368,26 @@ class Convo extends React.Component {
                                 <div className={styles.convos}>
                                     {convos}
                                 </div>
-                                <div className={styles.chats}>
+                                <div id="ContainerElementID" className={styles.chats}>
+                                    <div className="mb-4">
+                                    </div>
+                                    <div className={styles.scrollHolder}>
+                                        <div className={styles.scrollHolder2}>
+                                            <button onClick={()=> this.scrollToBottom()} className={styles.scrollToBottom}><i className='bx bx-down-arrow align-bottom'></i></button>
+                                        </div>
+                                    </div>
                                     {allChats}
                                 </div>
                             </div>
                             <div className={styles.userInput}>
                                 <div className={styles.input}>
-                                    <textarea className="form-control" value={this.state.message} onChange={(event)=> this.setMessage(event)} placeholder="Let's chat!" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <textarea className="form-control" value={this.state.message} onChange={(event)=> this.setMessage(event)} onKeyDown={(e)=> this.checkKey(e)} placeholder="Let's chat!" id="exampleFormControlTextarea1" rows="3"></textarea>
                                 </div>
                                 <button type="button" onClick={()=> this.sendMessage()} className={styles.button}>Send</button>
                             </div>
                         </div>
     }
+// ============================================================================================
 // ============================================================================================
 
 

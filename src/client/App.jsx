@@ -219,8 +219,10 @@ class App extends React.Component {
           const data = response.data;
 
           // UPDATE CONVOS AND CHATS STATE BASE ON FRESHEST INFO
-          this.setState({ convos: response.data.convos});
-          this.setState({ chats: response.data.chats});
+          this.setState({
+                convos: response.data.convos,
+                chats: response.data.chats
+            });
           console.log("Chat states")
           console.log(this.state)
 

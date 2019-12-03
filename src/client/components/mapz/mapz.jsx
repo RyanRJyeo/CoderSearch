@@ -6,7 +6,12 @@ import styles from './style.scss';
 
 import ReactMapGL, {Marker, Popup, NavigationControl} from "react-map-gl"
 
-const MapToken  = require("../../../../map.json")
+let MapToken;
+if({process.env.MapToken}){
+    MapToken = {process.env.MapToken}
+}else{
+    MapToken = require("../../../../map.json")
+}
 
 const cx = classnames.bind(styles)
 
