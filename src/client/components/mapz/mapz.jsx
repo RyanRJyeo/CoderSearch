@@ -6,21 +6,13 @@ import styles from './style.scss';
 
 import ReactMapGL, {Marker, Popup, NavigationControl} from "react-map-gl"
 
+
+MapToken = process.env.MapToken
+
+
 const cx = classnames.bind(styles)
 
-import MapToken from "../../../../map.json"
-
-
-if(!MapToken){
-    MapToken = process.env.MapToken
-}
-
-
-
 export default function Mapz(infoFromApp){
-
-
-
 
 // ====================================================================
 //                 Setting up React-Map-GL
