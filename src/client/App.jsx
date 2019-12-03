@@ -28,9 +28,16 @@ class App extends React.Component {
             hideProfile: true,
             hideConvo: true,
             selectedProfile: [],
+            convos: [],
+            chats: [],
         };
     };
 
+
+
+// ====================================================================================
+//                      GET THE INITIAL MAP INFO
+// ====================================================================================
     getMapInfo(){
 
       const url = '/reactInfo.json';
@@ -40,14 +47,27 @@ class App extends React.Component {
 
           const data = response.data
 
-          if(data.loggedIn === "coders"){
-            this.setState({ coders: data.coders });
-            this.setState({ loggedIn: data.loggedIn });
+        // GET OWN INPUT TO PLOT ON THE MAP FIRST
+        if(data.loggedIn === "coders"){
+            this.setState({
+                coders: data.coders,
+                loggedIn: data.loggedIn,
+                convos: response.data.convos,
+                chats: response.data.chats
+             });
+
         } else {
-            this.setState({ searchers: data.searchers });
-            this.setState({ loggedIn: data.loggedIn });
+            this.setState({
+                searchers: data.searchers,
+                convos: response.data.convos,
+                chats: response.data.chats,
+                loggedIn: data.loggedIn
+            });
         }
 
+        // GET ALL CHATS AND CONVOS
+
+        // SHOW INITIAL STATE
           console.log("Initial states")
           console.log(this.state)
 
@@ -55,16 +75,28 @@ class App extends React.Component {
           console.log(error);
         })
     }
+// ====================================================================================
 
 
+
+
+// ====================================================================================
+//                GET USER INPUT FROM COMPONENT CALLED RESULTS
+// ====================================================================================
     getUserInput(event){
-
+        // SHOW INPUT AT ALL TIMES ON CONSOLE.LOG
         this.setState({ userInput: event.target.value })
         console.log("userInput")
         console.log(this.state.userInput)
 
     }
+// ====================================================================================
 
+
+
+// ====================================================================================
+//                 SEARCH BASED ON USER'S INPUT
+// ====================================================================================
     searchNow(){
 
       const url = '/reactInfo.json';
@@ -73,14 +105,15 @@ class App extends React.Component {
         .then((response) => {
 
         const data = response.data
-        console.log(data)
+
+        // PREVENT AJAX CALL WHEN USER DID NOT TYPE ANYTHING
         if (this.state.userInput === ""){
             this.setState({ userInput: "$@1371263!@#!%@^#!&657" })
         }
 
+        // PUSH THE RESULTS INTO THESE ARRAYS
         let searchers = []
         let coders = []
-
         if(data.loggedIn === "coders"){
             for(let i=0; i < data.searchers.length; i++){
                 if (data.searchers[i].language){
@@ -89,6 +122,7 @@ class App extends React.Component {
                     }
                 }
             }
+            // SAVE RESULTS IN THE STATE
             this.setState({ searchers: searchers });
             console.log("Adding searchers and removing userInput")
             console.log(this.state)
@@ -100,6 +134,7 @@ class App extends React.Component {
                     }
                 }
             }
+            // SAVE RESULTS IN THE STATE
             this.setState({ coders: coders });
             console.log("Adding coders and removing userInput")
             console.log(this.state)
@@ -111,13 +146,21 @@ class App extends React.Component {
         })
 
     }
+// ====================================================================================
 
 
+// ====================================================================================
+//              SHOW SELECTED PROFILE BASED ON USER'S DECISION
+// ====================================================================================
     selectedProfile(event){
 
+        // USER'S SELECTION
         let id = event.target.value
+
+        // PUT SELECTED PROFILE IN THIS ARRAY
         let selectedProfile = [];
 
+        // AJAX CALL (ACTUALLY MIGHT NOT NEED THIS, REFACTOR NEXT TIME)
         const url = '/reactInfo.json';
         axios.get(url)
             .then((response) => {
@@ -148,35 +191,96 @@ class App extends React.Component {
         })
 
     }
+// ====================================================================================
 
 
+// ====================================================================================
+//                  START A CONVO BASED ON USER'S INPUT
+// ====================================================================================
+    startConvo(event){
+
+        // AJAX POST TO INSERT INTO THE CONVOS TABLE
+        axios.post('/convoInfo.json', {
+            id: event.target.value
+          })
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {
+            console.log(err);
+          });
+
+
+        // GETTING THE FRESHEST INFO FROM THE DATABASE
+        const url = '/reactInfo.json';
+        axios.get(url)
+        .then((response) => {
+
+          const data = response.data;
+
+          // UPDATE CONVOS AND CHATS STATE BASE ON FRESHEST INFO
+          this.setState({ convos: response.data.convos});
+          this.setState({ chats: response.data.chats});
+          console.log("Chat states")
+          console.log(this.state)
+
+        }).catch((error)=>{
+          console.log(error);
+        })
+
+    }
+// ====================================================================================
+
+
+
+// ====================================================================================
+//            TOGGLE REACT VIEW BETWEEN SEARCH, PROFILE, AND CHAT
+// ====================================================================================
     showSearch(){
-        this.setState({ hideSearch: false })
-        this.setState({ hideProfile: true })
-        this.setState({ hideConvo: true })
+        this.setState({
+            hideSearch: false,
+            hideProfile: true,
+            hideConvo: true
+        })
     }
 
     showProfile(){
-        this.setState({ hideSearch: true })
-        this.setState({ hideProfile: false })
-        this.setState({ hideConvo: true })
+        this.setState({
+            hideSearch: true,
+            hideProfile: false,
+            hideConvo: true
+        })
     }
 
     showConvo(){
-        this.setState({ hideSearch: true })
-        this.setState({ hideProfile: true })
-        this.setState({ hideConvo: false })
+        this.setState({
+            hideSearch: true,
+            hideProfile: true,
+            hideConvo: false
+        })
     }
+// ====================================================================================
+
+
+
+
+// ====================================================================================
+//        DO THIS FUNCTION WHEN THIS REACT COMPONENT FIRST GET RENDERED
+// ====================================================================================
+    componentDidMount(){
+        this.getMapInfo();
+    }
+// ====================================================================================
+
+
+
 
   render() {
 
-    if (this.state.counter < 1){
 
-        this.setState({ counter: this.state.counter + 1});
-        this.getMapInfo();
 
-    };
-
+//                      THE CSS FOR TOGGLING THE VIEWS
+// ====================================================================================
     // calling cx sets all the styles on the element in the display variable
     const displayS= cx(
       styles.main, // styles that never change
@@ -198,6 +302,9 @@ class App extends React.Component {
         [styles.other]: this.state.hideConvo // make the key the style name, and the value the dynamic boolean
       }
     )
+// ====================================================================================
+
+
 
     return (
       <div>
@@ -241,6 +348,9 @@ class App extends React.Component {
                     //     Display this user's full profile
                     selectedProfile={this.state.selectedProfile}
                     // ========================================
+                    //           Initiate a convo
+                    startConvo={(event)=> this.startConvo(event)}
+                    // ========================================
                 />
             </div>
             <div className={displayC}>
@@ -250,6 +360,10 @@ class App extends React.Component {
                     showSearch={()=> this.showSearch()}
                     showProfile={()=> this.showProfile()}
                     showConvo={()=> this.showConvo()}
+                    // ========================================
+                    // ========================================
+                    //    Parse Convos into here
+                    convos={this.state.convos}
                     // ========================================
                 />
             </div>

@@ -52,6 +52,7 @@
     "react-map-gl": "^5.1.3",
     "react-router-dom": "^5.1.2",
     "sha-256": "^1.0.3",
+    "socket.io": "^2.3.0",
     "webpack-hot-middleware": "^2.25.0"
   }
 }

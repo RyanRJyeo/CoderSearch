@@ -25,6 +25,7 @@ export default function Mapz(infoFromApp){
 
     const [selectedButton, setSelectedButton] = useState(null);
 
+    // CLOSE ALL POPUPS WHEN USER PRESS ESCAPE KEY
     useEffect(() => {
         const listener = (e) => {
             if(e.key === "Escape"){
@@ -38,7 +39,6 @@ export default function Mapz(infoFromApp){
             window.removeEventListener("keydown", listener);
         }
 
-
     }, []);
 // ====================================================================
 
@@ -46,22 +46,31 @@ export default function Mapz(infoFromApp){
 
 
 
-// ====================================================================
-//              Plotting markers on the map
-// ====================================================================
+// =============================================================================================
+//      Plotting markers on the map (NOT DONE YET, NEED TO WORK ON THE SEE MORE BUTTON)
+// =============================================================================================
     if (infoFromApp.coders && infoFromApp.searchers){
         console.log({infoFromApp})
     }
 
-
+    //            DO THIS TO PREVENT NULL ERROR
+    // =================================================================
     let mapInfo = {
         coders: [],
         searchers: []
     };
+    // =================================================================
+
+
+    //      GET INFO FROM PARAMS PASSED INTO HERE FROM APP.JSX
+    // =================================================================
     if(infoFromApp.coders || infoFromApp.searchers){
         mapInfo = infoFromApp;
     };
+    // =================================================================
 
+
+    // PLOT THE CODERS
     let coders = null
     if(mapInfo.coders[0]){
         coders =    mapInfo.coders.map(x =>{
@@ -87,6 +96,7 @@ export default function Mapz(infoFromApp){
                     });
     };
 
+    // PLOT THE SEARCHERS
     let searchers = null
     if(mapInfo.searchers[0]){
         searchers = mapInfo.searchers.map(x =>{
@@ -115,11 +125,14 @@ export default function Mapz(infoFromApp){
 // ====================================================================
 
 
+
+// RESULTS ARE SHOWN AND RUN THESE FUNCTIONS IF USER PRESS THE BUTTON SEE MORE
+// ====================================================================
     const handleClick = function(event){
         infoFromApp.selectedProfile(event);
         infoFromApp.showProfile();
     }
-
+// ====================================================================
 
 
 

@@ -368,6 +368,132 @@ module.exports = (dbPoolInstance) => {
 
 
 
+  const getAllConvosCoder = async (coder_id) => {
+    try{
+        const inputValues = [coder_id];
+        console.log(inputValues);
+        const query = 'SELECT * FROM convos WHERE coder_id = ($1)';
+
+        const queryResult = await dbPoolInstance.query(query,inputValues);
+
+        if( queryResult.rows.length > 0 ){
+          return queryResult.rows;
+
+        }else{
+          // return Promise.reject(new Error("codersearch#getAllConvosCoder return null"))
+          // if allow return empty array, do this: return [];
+          return []
+
+        }
+
+    }catch(error){
+        console.log("codersearch#getAllConvosCoder model error "+error);
+    }
+  }
+
+
+
+  const getAllConvosSearcher = async (searcher_id) => {
+    try{
+        const inputValues = [searcher_id];
+        console.log(inputValues);
+        const query = 'SELECT * FROM convos WHERE searcher_id = ($1)';
+
+        const queryResult = await dbPoolInstance.query(query,inputValues);
+
+        if( queryResult.rows.length > 0 ){
+          return queryResult.rows;
+
+        }else{
+          // return Promise.reject(new Error("codersearch#getAllConvosSearcher return null"))
+          // if allow return empty array, do this: return [];
+          return []
+
+        }
+
+    }catch(error){
+        console.log("codersearch#getAllConvosSearcher model error "+error);
+    }
+  }
+
+
+
+  const getAllChats = async () => {
+    try{
+        const inputValues = [];
+        console.log(inputValues);
+        const query = 'SELECT * FROM chats';
+
+        const queryResult = await dbPoolInstance.query(query,inputValues);
+
+        if( queryResult.rows.length > 0 ){
+          return queryResult.rows;
+
+        }else{
+          // return Promise.reject(new Error("codersearch#getAllChats return null"))
+
+        // if allow return empty array, do this: return [];
+          return []
+
+        }
+
+    }catch(error){
+        console.log("codersearch#getAllChats model error "+error);
+    }
+  }
+
+
+  const getStartConvo = async (coder_id, searcher_id) => {
+    try{
+        const inputValues = [coder_id, searcher_id];
+        console.log(inputValues);
+        const query = 'INSERT INTO convos (coder_id, searcher_id) VALUES ($1, $2) RETURNING *';
+
+        const queryResult = await dbPoolInstance.query(query,inputValues);
+
+        if( queryResult.rows.length > 0 ){
+          return queryResult.rows;
+
+        }else{
+          return Promise.reject(new Error("codersearch#getStartConvo return null"))
+
+        // if allow return empty array, do this: return [];
+
+        }
+
+    }catch(error){
+        console.log("codersearch#getStartConvo model error "+error);
+    }
+  }
+
+
+
+
+  const getChatAdded = async (convo_id, sender_id, receiver_id, sender_name, receiver_name, message) => {
+    try{
+        const inputValues = [convo_id, sender_id, receiver_id, sender_name, receiver_name, message];
+        console.log(inputValues);
+        const query = 'INSERT INTO chats (convo_id, sender_id, receiver_id, sender_name, receiver_name, message) VALUES ($1, $2, $3, $4, $5, $6 ) RETURNING *';
+
+        const queryResult = await dbPoolInstance.query(query,inputValues);
+
+        if( queryResult.rows.length > 0 ){
+          return queryResult.rows;
+
+        }else{
+          return Promise.reject(new Error("codersearch#getChatAdded return null"))
+
+        // if allow return empty array, do this: return [];
+
+        }
+
+    }catch(error){
+        console.log("codersearch#getChatAdded model error "+error);
+    }
+  }
+
+
+
   return {
     getCoderRegistered,
     getSearcherRegistered,
@@ -383,5 +509,10 @@ module.exports = (dbPoolInstance) => {
     getPPChangedSearcher,
     getAllSearchers,
     getAllCoders,
+    getAllConvosCoder,
+    getAllConvosSearcher,
+    getAllChats,
+    getStartConvo,
+    getChatAdded,
   };
 };

@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS convos(
 	id SERIAL PRIMARY KEY,
 	searcher_id INTEGER,
 	coder_id INTEGER,
+	started_on TIMESTAMPTZ DEFAULT now(),
 	UNIQUE (searcher_id, coder_id)
 );
 
@@ -51,5 +52,9 @@ CREATE TABLE IF NOT EXISTS chats(
 	id SERIAL PRIMARY KEY,
 	convo_id INTEGER,
 	sender_id INTEGER,
-	receiver_id INTEGER
+	receiver_id INTEGER,
+	sender_name TEXT,
+	receiver_name TEXT,
+	message TEXT,
+	created_at TIMESTAMPTZ DEFAULT now()
 );

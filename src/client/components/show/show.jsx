@@ -4,6 +4,8 @@ import styles from './style.scss';
 
 import classnames from 'classnames';
 
+import axios from 'axios';
+
 const cx = classnames.bind(styles)
 
 class Show extends React.Component {
@@ -15,6 +17,15 @@ class Show extends React.Component {
             counter: 0,
         };
     };
+
+
+//IF USER PRESS CHAT NOW BUTTON, GO TO THE CONVO PAGE AND ALSO INSERT INTO THE CONVO TABLE
+// ====================================================================
+    clickHandle(event){
+        this.props.showConvo();
+        this.props.startConvo(event);
+    }
+// ====================================================================
 
 
 
@@ -34,7 +45,7 @@ class Show extends React.Component {
                                 <p></p>
                                 <p className="card-text"><b>Description:</b><br/>{x.description}</p>
                                 <p className="mb-5"><b>Place of operations:</b><br/>{x.address}</p>
-                                <button className={styles.button}>Chat Now</button>
+                                <button value={x.id} onClick={(event)=> this.clickHandle(event)} className={styles.button}>Chat Now</button>
                               </div>
                             </div>
                         </div>

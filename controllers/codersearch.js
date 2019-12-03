@@ -460,11 +460,15 @@ module.exports = (db) => {
 
             const coders = await db.codersearch.getCoder(coder_id);
             const searchers = await db.codersearch.getAllSearchers();
+            const convos = await db.codersearch.getAllConvosCoder(coder_id);
+            const chats = await db.codersearch.getAllChats();
 
             let data = {
                 coders: coders,
                 searchers: searchers,
-                loggedIn: "coders"
+                loggedIn: "coders",
+                convos: convos,
+                chats: chats,
             }
 
             response.send(data);
@@ -473,11 +477,15 @@ module.exports = (db) => {
 
             const coders = await db.codersearch.getAllCoders();
             const searchers = await db.codersearch.getSearcher(searcher_id);
+            const convos = await db.codersearch.getAllConvosSearcher(searcher_id);
+            const chats = await db.codersearch.getAllChats();
 
             let data = {
                 coders: coders,
                 searchers: searchers,
-                loggedIn: "searchers"
+                loggedIn: "searchers",
+                convos: convos,
+                chats: chats,
             }
 
             response.send(data);
@@ -495,6 +503,80 @@ module.exports = (db) => {
 
 
 
+
+
+// ============================================================
+  const convoInfoCC = async (request,response) => {
+    try{
+
+        const coder_id = request.cookies['coder_id'];
+        const hashedCoder = sha256( SALT + coder_id );
+        const searcher_id = request.cookies['searcher_id'];
+        const hashedSearcher = sha256( SALT + searcher_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedCoder ){
+
+            let searcher_idzz = request.body.id
+
+            const results = await db.codersearch.getStartConvo(coder_id, searcher_idzz);
+
+            console.log(results)
+
+        } else if ( request.cookies['hasLoggedIn'] === hashedSearcher ){
+
+            let coder_idzz = request.body.id
+
+            const results = await db.codersearch.getStartConvo(coder_idzz, searcher_id);
+
+            console.log(results)
+
+        } else {
+            response.redirect('/');
+        }
+
+
+    }catch(error){
+        console.log("codersearch#convoInfoCC controller error "+ error);
+    }
+  }
+// ============================================================
+
+
+
+
+
+// ============================================================
+  const chatInfoCC = async (request,response) => {
+    try{
+
+        const coder_id = request.cookies['coder_id'];
+        const hashedCoder = sha256( SALT + coder_id );
+        const searcher_id = request.cookies['searcher_id'];
+        const hashedSearcher = sha256( SALT + searcher_id );
+
+        if( request.cookies['hasLoggedIn'] === hashedCoder || request.cookies['hasLoggedIn'] === hashedSearcher ){
+
+            console.log(request.body)
+            let convo_id = parseInt(request.body.convo_id);
+            let sender_id = parseInt(request.body.sender_id);
+            let receiver_id = parseInt(request.body.receiver_id);
+            let sender_name = request.body.sender_name;
+            let receiver_name = request.body.receiver_name;
+            let message = request.body.message;
+
+            const results = await db.codersearch.getChatAdded(convo_id, sender_id, receiver_id, sender_name, receiver_name, message);
+            response.send(true)
+
+        } else {
+            response.redirect('/');
+        }
+
+
+    }catch(error){
+        console.log("codersearch#chatInfoCC controller error "+ error);
+    }
+  }
+// ============================================================
 
 
 
@@ -516,6 +598,8 @@ module.exports = (db) => {
     changePassword: changePasswordCC,
     changeProfilePic: changeProfilePicCC,
     reactInfo: reactInfoCC,
+    convoInfo: convoInfoCC,
+    chatInfo: chatInfoCC,
   };
 
 }

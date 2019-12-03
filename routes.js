@@ -35,5 +35,7 @@ module.exports = (app, allModels) => {
 
 
   app.get('/reactInfo.json', codersearchCC.reactInfo);
+  app.post('/convoInfo.json', codersearchCC.convoInfo);
+  app.post('/chatInfo.json', codersearchCC.chatInfo);
 
 };

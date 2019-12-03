@@ -18,16 +18,21 @@ class Results extends React.Component {
     };
 
 
+//     RESULTS ARE SHOWN, AND RUN THESE FUNCTIONS IF USER PRESS THE SEE MORE BUTTON
+// ====================================================================================
     handleClick(event){
         this.props.selectedProfile(event);
         this.props.showProfile();
     }
-
+// ====================================================================================
 
 
   render() {
 
 
+
+//      IF CODERS LOGGED IN, SHOW THESE RESULTS, IF SEARCHERS LOGGED IN, SHOW ANOTHER
+// ====================================================================================
     let results = null;
     if(this.props.loggedIn === "coders"){
         if(this.props.searchers){
@@ -62,7 +67,7 @@ class Results extends React.Component {
             });
         };
     }
-
+// ====================================================================================
 
     return (
       <div>

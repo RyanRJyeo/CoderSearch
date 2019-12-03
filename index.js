@@ -1,6 +1,8 @@
+const http = require("http");
 const {resolve} = require('path');
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const socketIO = require('socket.io')
 
 process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
@@ -45,7 +47,24 @@ require('./routes')(app, db);
 
 // application routes (this goes last)
 setupAppRoutes(app);
+const server = http.createServer(app)
+const io = socketIO(server)
 
+
+io.on('connection', socket => {
+    console.log("user connected")
+
+
+    socket.on('chat updated', (value) => {
+        console.log("get socket and emitting")
+        io.sockets.emit("chat updated", value);
+    })
+
+
+    socket.on("disconnect", () => {
+        console.log("user disconnected")
+    })
+})
 /*
  * =======================================================================
  * =======================================================================
@@ -56,6 +75,10 @@ setupAppRoutes(app);
  * =======================================================================
  */
 
-app.listen(process.env.PORT, () => {
+
+
+
+
+server.listen(process.env.PORT, () => {
   console.log(`HTTP server is now running on http://localhost:${process.env.PORT}`);
 });
