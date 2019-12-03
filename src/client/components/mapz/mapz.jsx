@@ -7,7 +7,7 @@ import styles from './style.scss';
 import ReactMapGL, {Marker, Popup, NavigationControl} from "react-map-gl"
 
 
-MapToken = process.env.MapToken
+    MapToken = process.env.MapToken
 
 
 const cx = classnames.bind(styles)
