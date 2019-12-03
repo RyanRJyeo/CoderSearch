@@ -8,15 +8,18 @@ import ReactMapGL, {Marker, Popup, NavigationControl} from "react-map-gl"
 
 const cx = classnames.bind(styles)
 
+import MapToken from "../../../../map.json"
+
+
+if(!MapToken){
+    MapToken = process.env.MapToken
+}
+
+
+
 export default function Mapz(infoFromApp){
 
 
-    let MapToken;
-    if(process.env.MapToken){
-        MapToken = process.env.MapToken
-    }else{
-        MapToken = require("../../../../map.json")
-    }
 
 
 // ====================================================================
