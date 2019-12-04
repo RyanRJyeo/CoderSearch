@@ -144,7 +144,6 @@ class Convo extends React.Component {
                     receiver_name: result[1],
                 }});
         };
-        this.scrollToBottom();
     };
 // ============================================================================================
 
@@ -181,7 +180,7 @@ class Convo extends React.Component {
                 }else if( URL.includes("http://localhost") ){
                     this.endpoint = "http://localhost";
                 }else{
-                    this.endpoint = "https://ga-classroom-controller.herokuapp.com";
+                    this.endpoint = "https://codersearch.herokuapp.com/";
                 }
     }
 // ============================================================================================
@@ -234,10 +233,14 @@ class Convo extends React.Component {
 
 //       RUN THIS FUNCTION WHENEVER THAT PROPS THAT'S PASSED FROM APP.JSX CHANGES
 // ============================================================================================
-    componentDidUpdate(prevProps){
+    componentDidUpdate(prevProps, prevState){
         if (this.props.convos.length !== prevProps.convos.length) {
             this.getCS();
         }
+        if(this.state.chats !== prevState.chats || this.state.currentChat !== prevState.currentChat){
+            this.scrollToBottom()
+        }
+
     }
 // ============================================================================================
 
@@ -349,10 +352,8 @@ class Convo extends React.Component {
                             </div>
                 }
             }
-        })
-        // SCROLL TO BOTTOM WHEN ALL THIS DATA IS RETRIEVED
-        this.scrollToBottom();
-    }
+        });
+    };
 
 
 
