@@ -103,5 +103,6 @@ salt.json
 api.json
 map.json
 .env.local
+node_modules/
 
 /public/geocode.js
