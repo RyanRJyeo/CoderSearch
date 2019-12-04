@@ -27,6 +27,21 @@ class Results extends React.Component {
 // ====================================================================================
 
 
+
+//                        SEND MESSAGE IF KEYDOWN ON "ENTER"
+// ============================================================================================
+    checkKey(e) {
+        if(e.keyCode === 13 && e.target.value !== ""){
+            this.props.searchNow()
+        }
+    }
+// ============================================================================================
+
+
+
+
+
+
   render() {
 
 
@@ -81,7 +96,7 @@ class Results extends React.Component {
                 <h3>Start Your Search!</h3>
             </div>
             <div className="input-group mb-3">
-              <input type="text" className="form-control" placeholder="Skills / Place of Operations" name="name" onChange={this.props.getUserInput} required/>
+              <input type="text" className="form-control" onKeyDown={(e)=> this.checkKey(e)} placeholder="Skills / Place of Operations" name="name" onChange={this.props.getUserInput} required/>
             </div>
             <button type="submit" className="btn btn-outline-light" onClick={()=>this.props.searchNow()}>Submit</button>
             {results}

@@ -57,6 +57,7 @@ class CoderEdit extends React.Component {
             <meta charset="utf-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+            <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet" />
             <link rel="stylesheet" type="text/css" href="/style.css"/>
         </head>
         <body>
@@ -108,9 +109,9 @@ class CoderEdit extends React.Component {
                   </div>
                   <div className="form-group">
                     <p>Description:</p>
-                    <textarea rows="8" maxlength="1000" className="form-control rounded" name="description" placeholder="Let searchers know something about yourself or your company(experience, portfolios, etc)" value={description} required >
+                    <textarea rows="8" maxlength="5000" className="form-control rounded" name="description" placeholder="Let searchers know something about yourself or your company(experience, portfolios, etc)" value={description} required >
                     </textarea>
-                    <small class="form-text text-muted">up to 1000(char)</small>
+                    <small class="form-text text-muted">up to 5000(char)</small>
                   </div>
                   <div className="form-group">
                     <p>Place of Operations: </p>

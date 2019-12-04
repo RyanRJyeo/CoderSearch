@@ -1,3 +1,9 @@
+body{
+	font-family: 'Roboto', sans-serif;
+	background: rgb(255,255,255);
+	background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(241,238,253,1) 31%);
+}
+
 .navbar-brand{
 	font-size: 25px;
 	margin-left: 30%;
@@ -53,6 +59,10 @@
 }
 
 .search2{
+	background-color: #FFF;
+	border-radius: 10px;
+	box-shadow: 5px 5px 10px;
+	padding: 10px 40px;
 	width: 400px;
 }
 
@@ -217,6 +227,7 @@
 
 	.search2{
 		width: 80%;
+		font-size: 15px;
 	}
 
 	.showcase3{

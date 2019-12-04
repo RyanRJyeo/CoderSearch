@@ -18,6 +18,7 @@ class ErrorLogin extends React.Component {
             <meta charset="utf-8"/>
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+            <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet" />
             <link rel="stylesheet" type="text/css" href="/style.css"/>
         </head>
         <body>
@@ -27,7 +28,14 @@ class ErrorLogin extends React.Component {
           </div>
           <div className="showcase2">
               <img className="search" src="images/search.svg" />
-              <p className="search2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+              <div className="search2 mb-5 mt-5">
+                <div className="text-center mb-3 mt-3">
+                    <h2>CODER? <span className="blue">SEARCH!</span></h2>
+                </div>
+                <p>We know how hard it can be to find the right coder / programmer / software-engineer for your projects. Similarly, it can be hard for coders or tech consulting companies to find clients in this highly competitive world. </p>
+
+                <p>Enter CoderSearch, the perfect web app for coders and searchers to find and communicate with one another. Users are able to find their targets by a variety of parameters such as their name, technical skills required, and even their location. With an in-built Map location and chat service, your search have never been clearer and communication have never been faster!</p>
+              </div>
           </div>
           <div className="showcase3">
           </div>
@@ -83,6 +91,7 @@ class ErrorLogin extends React.Component {
               </div>
 
           </div>
+
 
 
           <script src="script.js"></script>
