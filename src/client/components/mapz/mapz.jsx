@@ -8,12 +8,9 @@ import ReactMapGL, {Marker, Popup, NavigationControl} from "react-map-gl"
 
 
 
-let MapToken;
-if (process.env.MapToken){
-    MapToken = process.env.MapToken
-} else {
-    MapToken  = require("../../../../map.js").MapToken
-}
+
+const MapToken = process.env.MapToken
+
 
 
 const cx = classnames.bind(styles)
