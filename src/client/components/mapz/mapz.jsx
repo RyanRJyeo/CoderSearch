@@ -12,8 +12,9 @@ let MapToken;
 if (process.env.MapToken){
     MapToken = process.env.MapToken
 } else {
-    MapToken  = require("../../../../map.json")
+    MapToken  = require("../../../../map.js").MapToken
 }
+
 
 const cx = classnames.bind(styles)
 
