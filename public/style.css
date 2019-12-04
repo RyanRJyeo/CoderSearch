@@ -231,6 +231,10 @@ body{
 
 @media only screen and (max-width: 700px) {
 
+	body{
+		background: none;
+	}
+
 	.navbar-brand{
 		font-size: 20px;
 		margin-left: 10%;
@@ -241,8 +245,8 @@ body{
 		background-position: top;
 		background-repeat: no-repeat;
 		background-attachment: fixed;
-		background-size: 100% 40%;
-		height: 30vh;
+		background-size: 100% 50%;
+		height: 300px;
 	}
 
 
