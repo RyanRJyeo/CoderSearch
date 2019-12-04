@@ -177,9 +177,6 @@ export default function Mapz(infoFromApp){
                             </div>
                         </div>
                         <small>{selectedButton.street} {selectedButton.city} {selectedButton.country}</small>
-                        <br/>
-                        <br/>
-                        <button value={selectedButton.id} className={styles.coderButton} onClick={(event)=> handleClick(event)}  >See More</button>
                     </div>
                 </Popup>
 

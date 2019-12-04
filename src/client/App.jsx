@@ -117,7 +117,7 @@ class App extends React.Component {
         if(data.loggedIn === "coders"){
             for(let i=0; i < data.searchers.length; i++){
                 if (data.searchers[i].language){
-                    if(data.searchers[i].language.includes(this.state.userInput) || data.searchers[i].framework.includes(this.state.userInput) || data.searchers[i].address.includes(this.state.userInput)){
+                    if(data.searchers[i].language.toLowerCase().includes(this.state.userInput.toLowerCase()) || data.searchers[i].framework.toLowerCase().includes(this.state.userInput.toLowerCase()) || data.searchers[i].address.toLowerCase().includes(this.state.userInput.toLowerCase())){
                         searchers.push(data.searchers[i])
                     }
                 }
@@ -129,7 +129,7 @@ class App extends React.Component {
         } else {
             for(let i=0; i < data.coders.length; i++){
                 if (data.coders[i].language){
-                    if(data.coders[i].language.includes(this.state.userInput) || data.coders[i].framework.includes(this.state.userInput) || data.coders[i].address.includes(this.state.userInput)){
+                    if(data.coders[i].language.toLowerCase().includes(this.state.userInput.toLowerCase()) || data.coders[i].framework.toLowerCase().includes(this.state.userInput.toLowerCase()) || data.coders[i].address.toLowerCase().includes(this.state.userInput.toLowerCase())){
                         coders.push(data.coders[i])
                     }
                 }
@@ -315,6 +315,7 @@ class App extends React.Component {
             searchers ={this.state.searchers}
             selectedProfile={(event)=> this.selectedProfile(event)}
             showProfile={()=> this.showProfile()}
+            loggedIn={this.state.loggedIn}
         />
         <div className={styles.flex}>
             <div className={displayS}>
