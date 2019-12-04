@@ -11,13 +11,16 @@ const sha256 = require('js-sha256');
     }
 
 
-const clientBuildPath = resolve(__dirname, '..', 'src', 'client');
+const clientBuildPath = resolve(__dirname, '..', 'build', 'client');
 
 module.exports = function setup(app) {
   app.use(compression());
   app.use('/', express.static(clientBuildPath));
 
   // all other requests be handled by UI itself
+  // app.get('/discover', (req, res) => res.sendFile(resolve(clientBuildPath, 'index.html')));
+
+
   app.get('/discover', (request, res) => {
 
     try{
@@ -29,7 +32,7 @@ module.exports = function setup(app) {
 
         if( request.cookies['hasLoggedIn'] === hashedCoder || request.cookies['hasLoggedIn'] === hashedSearcher ){
 
-            res.sendFile(resolve(clientBuildPath, 'index.html'))
+            res.sendFile(resolve(clientBuildPath, 'index.html'));
 
         } else {
             res.redirect('/');
@@ -41,5 +44,12 @@ module.exports = function setup(app) {
     }
 
 
+
+
     });
+
+
+
+
+
 };
