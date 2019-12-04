@@ -11,9 +11,12 @@
 
 <style>
 
+/* prefixed by https://autoprefixer.github.io (PostCSS: v7.0.23, autoprefixer: v9.7.3) */
+
     body{
         font-family: 'Roboto', sans-serif;
         background: rgb(255,255,255);
+        background: -o-radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(241,238,253,1) 31%);
         background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(241,238,253,1) 31%);
     }
 
@@ -60,7 +63,8 @@
     }
 
     .button-outline-primary:focus{
-        box-shadow: none;
+        -webkit-box-shadow: none;
+                box-shadow: none;
     }
 
     @media only screen and (max-width: 700px) {
