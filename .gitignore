@@ -101,7 +101,7 @@ Temporary Items
 config.json
 salt.json
 api.json
-map.js
+
 .env.local
 node_modules/
 

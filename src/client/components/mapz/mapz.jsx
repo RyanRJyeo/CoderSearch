@@ -6,12 +6,7 @@ import styles from './style.scss';
 
 import ReactMapGL, {Marker, Popup, NavigationControl} from "react-map-gl"
 
-
-
-
-const MapToken = process.env.MapToken
-
-
+const MAPTOKEN = require("../../../../map.json")
 
 const cx = classnames.bind(styles)
 
@@ -145,7 +140,7 @@ export default function Mapz(infoFromApp){
       <div>
         <ReactMapGL
             {... viewport}
-            mapboxApiAccessToken={MapToken}
+            mapboxApiAccessToken={MAPTOKEN}
             mapStyle="mapbox://styles/ryanyeo/ck3jkvc8209p51crrtw6g4cdt"
             onViewportChange = {(viewport) => {
                 setViewport(viewport);
