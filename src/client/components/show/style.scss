@@ -99,7 +99,28 @@
 	padding: 5px;
 }
 
+.info{
+	background-color: #fff;
+	border-radius: 10px;
+	padding: 10px 30px 40px;
+}
+
 @media only screen and (max-width: 700px) {
+
+	.profile{
+		background-color: #8985A8;
+		border-radius: 10px;
+		box-shadow: -5px 10px 10px;
+		padding: 15px;
+		width: 100%;
+	}
+
+
+	.info{
+		background-color: #fff;
+		border-radius: 10px;
+		padding: 10px 15px 20px;
+	}
 
 	.image{
 		width: 50%;

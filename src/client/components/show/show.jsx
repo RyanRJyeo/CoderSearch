@@ -36,9 +36,11 @@ class Show extends React.Component {
         if(this.props.selectedProfile.length === 1){
             profile = this.props.selectedProfile.map(x=>{
                 return  <div>
-                            <div className="card">
-                              <img src={x.image} className={styles.image} alt="User Profile Image" />
-                              <div className="card-body">
+                            <div className={styles.info}>
+                              <div className="text-center">
+                                <img src={x.image} className={styles.image} alt="User Profile Image" />
+                              </div>
+                              <div>
                                 <h2 className="card-title text-center mb-5">{x.name}</h2>
                                 <p><b>Languages:</b> {x.language}</p>
                                 <p><b>Framework:</b> {x.framework}</p>
