@@ -1,6 +1,6 @@
 # CoderSearch
 
-
+![codersearch](https://raw.githubusercontent.com/RyanRJyeo/CoderSearch/master/codersearch.png)
 
 ## Technologies Used
   ```
