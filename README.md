@@ -27,7 +27,7 @@ I've separated the project into two parts:
 
 1. The MVP (minimum viable product). It consist of users logging in, updating and changing their own profile information, find other users, see other users on the Mapbox API as markers with popups revealing some info about the users, and finally see their full profile.
 
-2. The further (additional goals). It consist of users being able to talk start a conversation with each other and chat in a real-time scenario, with the messages constantly updated if the database is updated. After the normal non-live version of the chat is done, I used Socket.io to link up the chat with my database.
+2. The further (additional goals). It consist of users being able to start a conversation with each other and chat in a real-time scenario, with the messages constantly updated if the database is updated. After the normal non-live version of the chat is done, I used Socket.io to link up the chat with my database.
 
 
 This separation of project segments allowed me to pace myself accordingly as I worked on the project. 
