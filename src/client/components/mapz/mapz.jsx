@@ -6,9 +6,9 @@ import styles from './style.scss';
 
 import ReactMapGL, {Marker, Popup, NavigationControl} from "react-map-gl"
 
-const MAPTOKEN = require("../../../../map.json")
+const MAPTOKEN = "pk.eyJ1IjoicnlhbnllbyIsImEiOiJjazNqajE4dnMwanFsM2VuMWJjcmU0Zjc3In0.ONahLF4N88HEHknK6uB-Mg";
 
-const cx = classnames.bind(styles)
+const cx = classnames.bind(styles);
 
 export default function Mapz(infoFromApp){
 
