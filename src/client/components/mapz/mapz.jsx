@@ -6,7 +6,8 @@ import styles from './style.scss';
 
 import ReactMapGL, {Marker, Popup, NavigationControl} from "react-map-gl"
 
-const MAPTOKEN = "pk.eyJ1IjoicnlhbnllbyIsImEiOiJjazNqajE4dnMwanFsM2VuMWJjcmU0Zjc3In0.ONahLF4N88HEHknK6uB-Mg";
+// Have to fix this for heroku
+const MAPTOKEN = require("../../../../map.json")
 
 const cx = classnames.bind(styles);
 
