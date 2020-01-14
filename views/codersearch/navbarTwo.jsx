@@ -7,6 +7,7 @@ class NavbarTwo extends React.Component {
         <html>
             <head>
                 <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.3/css/boxicons.min.css' rel='stylesheet'/>
+                <title>CoderSearch | Profile</title>
             </head>
             <header>
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">

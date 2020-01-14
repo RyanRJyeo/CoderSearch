@@ -14,31 +14,34 @@ class Home extends React.Component {
     //   return <p>{pokemon.name}</p>;
     // });
 
-    let alertCoder;
+    let alertCoder = null;
 
     if(this.props.coder){
-        if(this.props.status){
-            alertCoder =     <div class="alert alert-primary text-center" role="alert">
-                              Successfully registered as {this.props.coder} (Coder)
-                            </div>
-        } else {
-            alertCoder =     <div class="alert alert-danger text-center" role="alert">
-                              Registration as coder unsuccessful
-                            </div>
-        };
+      if(this.props.registerStatus){
+        alertCoder =  <div class="alert alert-primary text-center" role="alert">
+                        Successfully registered as {this.props.coder} (Coder)
+                      </div>
+      } else {
+        alertCoder =  <div class="alert alert-danger text-center" role="alert">
+                        Registration as coder unsuccessful
+                      </div>
+      };
+
     } else if (this.props.searcher){
-        if(this.props.status){
-            alertCoder =     <div class="alert alert-primary text-center" role="alert">
-                              Successfully registered as {this.props.searcher} (Searcher)
-                            </div>
-        } else {
-            alertCoder =     <div class="alert alert-danger text-center" role="alert">
-                              Registration as searcher unsuccessful
-                            </div>
-        };
-    } else {
-        alertCoder= null
-    }
+      if(this.props.registerStatus){
+        alertCoder =  <div class="alert alert-primary text-center" role="alert">
+                        Successfully registered as {this.props.searcher} (Searcher)
+                      </div>
+      } else {
+        alertCoder =  <div class="alert alert-danger text-center" role="alert">
+                        Registration as searcher unsuccessful
+                      </div>
+      };
+    } else if(this.props.loginStatus){
+        alertCoder =  <div class="alert alert-danger text-center" role="alert">
+                        Login Unsuccessful!
+                      </div>
+      }
 
 
 
@@ -46,18 +49,17 @@ class Home extends React.Component {
     return (
       <html>
         <head>
-            <meta charset="utf-8"/>
-            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-            <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.3/css/boxicons.min.css' rel='stylesheet'/>
-            <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet" />
-            <link rel="stylesheet" type="text/css" href="/style.css"/>
+          <meta charset="utf-8"/>
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
+          <link href='https://cdn.jsdelivr.net/npm/boxicons@2.0.3/css/boxicons.min.css' rel='stylesheet'/>
+          <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap" rel="stylesheet" />
+          <link rel="stylesheet" type="text/css" href="/style.css"/>
         </head>
         <body>
           {alertCoder}
           <Navbar/>
-          <div className="showcase">
-          </div>
+          <div className="showcase"></div>
           <div className="showcase2">
               <img className="search" src="images/search.svg" />
               <div className="search2 mb-5 mt-5">

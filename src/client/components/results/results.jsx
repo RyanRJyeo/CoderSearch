@@ -8,34 +8,34 @@ const cx = classnames.bind(styles)
 
 class Results extends React.Component {
 
-    constructor(){
-        super();
+  constructor(){
+    super();
 
-        this.state = {
-            counter: 0,
-            results: "",
-        };
+    this.state = {
+      counter: 0,
+      results: "",
     };
+  };
 
 
-//     RESULTS ARE SHOWN, AND RUN THESE FUNCTIONS IF USER PRESS THE SEE MORE BUTTON
-// ====================================================================================
-    handleClick(event){
-        this.props.selectedProfile(event);
-        this.props.showProfile();
+// RESULTS ARE SHOWN, AND RUN THESE FUNCTIONS IF USER PRESS THE SEE MORE BUTTON
+// ====================================
+  handleClick(event){
+    this.props.selectedProfile(event);
+    this.props.showProfile();
+  }
+// ====================================
+
+
+
+// SEND USER INPUT IF KEYDOWN ON "ENTER"
+// ====================================
+  checkKey(e) {
+    if(e.keyCode === 13 && e.target.value !== ""){
+      this.props.searchNow()
     }
-// ====================================================================================
-
-
-
-//                        SEND MESSAGE IF KEYDOWN ON "ENTER"
-// ============================================================================================
-    checkKey(e) {
-        if(e.keyCode === 13 && e.target.value !== ""){
-            this.props.searchNow()
-        }
-    }
-// ============================================================================================
+  }
+// ====================================
 
 
 
@@ -46,43 +46,39 @@ class Results extends React.Component {
 
 
 
-//      IF CODERS LOGGED IN, SHOW THESE RESULTS, IF SEARCHERS LOGGED IN, SHOW ANOTHER
-// ====================================================================================
-    let results = null;
-    if(this.props.loggedIn === "coders"){
-        if(this.props.searchers){
-            results = this.props.searchers.map(x =>{
-                return  <div>
-                            <div className="card bg-light mt-4 mb-3">
-                              <div className="card-body">
-                                <h5 className="card-title">{x.name}</h5>
-                                <p className="card-text">{x.language}</p>
-                                <p className="card-text">{x.framework}</p>
-                                <p className="card-text"><small>{x.street} {x.city} {x.country}</small></p>
-                                <button value={x.id} onClick={(event)=> this.handleClick(event)} className={styles.button}>See More</button>
-                              </div>
-                            </div>
-                        </div>
-            });
-        };
-    } else {
-        if(this.props.coders){
-            results = this.props.coders.map(x =>{
-                return  <div>
-                            <div className="card bg-light mt-4 mb-3">
-                              <div className="card-body">
-                                <h5 className="card-title">{x.name} <span className={styles.purple}>{x.occupation_type}</span></h5>
-                                <p className="card-text"><b>Language:</b> {x.language}</p>
-                                <p className="card-text"><b>Framework:</b> {x.framework}</p>
-                                <p className="card-text"><small>{x.street} {x.city} {x.country}</small></p>
-                                <button value={x.id} onClick={(event)=> this.handleClick(event)}className={styles.button}>See More</button>
-                              </div>
-                            </div>
-                        </div>
-            });
-        };
-    }
-// ====================================================================================
+//  IF CODERS LOGGED IN, SHOW THESE RESULTS, IF SEARCHERS LOGGED IN, SHOW ANOTHER
+// ====================================
+  let results = null;
+  if(this.props.loggedIn === "coders"){
+    if(this.props.searchers){
+      results = this.props.searchers.map(x =>{
+        return  <div key={x.id} className="card bg-light mt-4 mb-3">
+                  <div className="card-body">
+                    <h5 className="card-title">{x.name}</h5>
+                    <p className="card-text">{x.language}</p>
+                    <p className="card-text">{x.framework}</p>
+                    <p className="card-text"><small>{x.street} {x.city} {x.country}</small></p>
+                    <button value={x.id} onClick={(event)=> this.handleClick(event)} className={styles.button}>See More</button>
+                  </div>
+                </div>
+      });
+    };
+  } else {
+    if(this.props.coders){
+      results = this.props.coders.map(x =>{
+        return  <div key={x.id} className="card bg-light mt-4 mb-3">
+                  <div className="card-body">
+                    <h5 className="card-title">{x.name} <span className={styles.purple}>{x.occupation_type}</span></h5>
+                    <p className="card-text"><b>Language:</b> {x.language}</p>
+                    <p className="card-text"><b>Framework:</b> {x.framework}</p>
+                    <p className="card-text"><small>{x.street} {x.city} {x.country}</small></p>
+                    <button value={x.id} onClick={(event)=> this.handleClick(event)}className={styles.button}>See More</button>
+                  </div>
+                </div>
+      });
+    };
+  }
+// ====================================
 
     return (
       <div>

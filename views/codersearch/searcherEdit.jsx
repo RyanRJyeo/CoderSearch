@@ -5,14 +5,9 @@ class SearcherEdit extends React.Component {
 
     const NavbarTwo = require('./navbarTwo.jsx');
 
-    let language = null;
-    let framework = null;
-    let description = null;
-    if (this.props.results[0].language){
-        language = this.props.results[0].language;
-        framework = this.props.results[0].framework;
-        description = this.props.results[0].description;
-    }
+    let language = this.props.results[0].language || null;
+    let framework = this.props.results[0].framework || null;
+    let description = this.props.results[0].description || null;
 
 
     let alertUser = null
@@ -30,18 +25,11 @@ class SearcherEdit extends React.Component {
     }
 
 
-    let street = null;
-    let city = null;
-    let state = null;
-    let zip = null;
-    let country = null;
-    if(this.props.results[0].street){
-        street = this.props.results[0].street;
-        city = this.props.results[0].city
-        state = this.props.results[0].state
-        zip = this.props.results[0].zip
-        country = this.props.results[0].country
-    }
+    let street = this.props.results[0].street || null;
+    let city = this.props.results[0].city || null;
+    let state = this.props.results[0].state || null;
+    let zip = this.props.results[0].zip || null;
+    let country = this.props.results[0].country || null;
 
 
     return (

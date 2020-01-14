@@ -19,7 +19,6 @@ class App extends React.Component {
         super();
 
         this.state = {
-            counter: 0,
             coders: "",
             searchers: "",
             userInput: "$@1371263!@#!%@^#!&657",
@@ -35,9 +34,9 @@ class App extends React.Component {
 
 
 
-// ====================================================================================
-//                      GET THE INITIAL MAP INFO
-// ====================================================================================
+// ===========================================
+//  GET THE INITIAL MAP INFO
+// ===========================================
     getMapInfo(){
 
       const url = '/reactInfo.json';
@@ -51,9 +50,9 @@ class App extends React.Component {
         if(data.loggedIn === "coders"){
             this.setState({
                 coders: data.coders,
-                loggedIn: data.loggedIn,
                 convos: response.data.convos,
-                chats: response.data.chats
+                chats: response.data.chats,
+                loggedIn: data.loggedIn
              });
 
         } else {
@@ -65,8 +64,6 @@ class App extends React.Component {
             });
         }
 
-        // GET ALL CHATS AND CONVOS
-
         // SHOW INITIAL STATE
           console.log("Initial states")
           console.log(this.state)
@@ -75,14 +72,14 @@ class App extends React.Component {
           console.log(error);
         })
     }
-// ====================================================================================
+// ===========================================
 
 
 
 
-// ====================================================================================
-//                GET USER INPUT FROM COMPONENT CALLED RESULTS
-// ====================================================================================
+// ===========================================
+//  GET USER INPUT FROM COMPONENT CALLED RESULTS
+// ===========================================
     getUserInput(event){
         // SHOW INPUT AT ALL TIMES ON CONSOLE.LOG
         this.setState({ userInput: event.target.value })
@@ -90,13 +87,13 @@ class App extends React.Component {
         console.log(this.state.userInput)
 
     }
-// ====================================================================================
+// ===========================================
 
 
 
-// ====================================================================================
-//                 SEARCH BASED ON USER'S INPUT
-// ====================================================================================
+// ===========================================
+//  SEARCH BASED ON USER'S INPUT
+// ===========================================
     searchNow(){
 
       const url = '/reactInfo.json';
@@ -117,7 +114,8 @@ class App extends React.Component {
         if(data.loggedIn === "coders"){
             for(let i=0; i < data.searchers.length; i++){
                 if (data.searchers[i].language){
-                    if(data.searchers[i].language.toLowerCase().includes(this.state.userInput.toLowerCase()) || data.searchers[i].framework.toLowerCase().includes(this.state.userInput.toLowerCase()) || data.searchers[i].address.toLowerCase().includes(this.state.userInput.toLowerCase())){
+                    let userInput = this.state.userInput.toLowerCase();
+                    if(data.searchers[i].language.toLowerCase().includes(userInput) || data.searchers[i].framework.toLowerCase().includes(userInput) || data.searchers[i].address.toLowerCase().includes(userInput)){
                         searchers.push(data.searchers[i])
                     }
                 }
@@ -129,7 +127,8 @@ class App extends React.Component {
         } else {
             for(let i=0; i < data.coders.length; i++){
                 if (data.coders[i].language){
-                    if(data.coders[i].language.toLowerCase().includes(this.state.userInput.toLowerCase()) || data.coders[i].framework.toLowerCase().includes(this.state.userInput.toLowerCase()) || data.coders[i].address.toLowerCase().includes(this.state.userInput.toLowerCase())){
+                    let userInput = this.state.userInput.toLowerCase();
+                    if(data.coders[i].language.toLowerCase().includes(userInput) || data.coders[i].framework.toLowerCase().includes(userInput) || data.coders[i].address.toLowerCase().includes(userInput)){
                         coders.push(data.coders[i])
                     }
                 }
@@ -146,12 +145,12 @@ class App extends React.Component {
         })
 
     }
-// ====================================================================================
+// ===========================================
 
 
-// ====================================================================================
-//              SHOW SELECTED PROFILE BASED ON USER'S DECISION
-// ====================================================================================
+// ===========================================
+//  SHOW SELECTED PROFILE BASED ON USER'S DECISION
+// ===========================================
     selectedProfile(event){
 
         // USER'S SELECTION
@@ -191,12 +190,12 @@ class App extends React.Component {
         })
 
     }
-// ====================================================================================
+// ===========================================
 
 
-// ====================================================================================
-//                  START A CONVO BASED ON USER'S INPUT
-// ====================================================================================
+// ===========================================
+//  START A CONVO BASED ON USER'S INPUT
+// ===========================================
     startConvo(event){
 
         // AJAX POST TO INSERT INTO THE CONVOS TABLE
@@ -220,8 +219,8 @@ class App extends React.Component {
 
           // UPDATE CONVOS AND CHATS STATE BASE ON FRESHEST INFO
           this.setState({
-                convos: response.data.convos,
-                chats: response.data.chats
+                convos: data.convos,
+                chats: data.chats
             });
           console.log("Chat states")
           console.log(this.state)
@@ -231,13 +230,13 @@ class App extends React.Component {
         })
 
     }
-// ====================================================================================
+// ===========================================
 
 
 
-// ====================================================================================
+// ===========================================
 //            TOGGLE REACT VIEW BETWEEN SEARCH, PROFILE, AND CHAT
-// ====================================================================================
+// ===========================================
     showSearch(){
         this.setState({
             hideSearch: false,
@@ -261,18 +260,18 @@ class App extends React.Component {
             hideConvo: false
         })
     }
-// ====================================================================================
+// ===========================================
 
 
 
 
-// ====================================================================================
+// ===========================================
 //        DO THIS FUNCTION WHEN THIS REACT COMPONENT FIRST GET RENDERED
-// ====================================================================================
+// ===========================================
     componentDidMount(){
         this.getMapInfo();
     }
-// ====================================================================================
+// ===========================================
 
 
 
@@ -282,7 +281,7 @@ class App extends React.Component {
 
 
 //                      THE CSS FOR TOGGLING THE VIEWS
-// ====================================================================================
+// ===========================================
     // calling cx sets all the styles on the element in the display variable
     const displayS= cx(
       styles.main, // styles that never change
@@ -304,7 +303,7 @@ class App extends React.Component {
         [styles.other]: this.state.hideConvo // make the key the style name, and the value the dynamic boolean
       }
     )
-// ====================================================================================
+// ===========================================
 
 
 

@@ -12,128 +12,117 @@ const cx = classnames.bind(styles)
 
 export default function Mapz(infoFromApp){
 
-// ====================================================================
-//                 Setting up React-Map-GL
-// ====================================================================
-    const [viewport, setViewport] = useState({
-        latitude: 0,
-        longitude: 0,
-        width: "100vw",
-        height: "50vh",
-        zoom: 0
-    })
+// ========================================
+//  Setting up React-Map-GL
+// ========================================
+  const [viewport, setViewport] = useState({
+    latitude: 0,
+    longitude: 0,
+    width: "100vw",
+    height: "50vh",
+    zoom: 0
+  })
 
-    const [selectedButton, setSelectedButton] = useState(null);
+  const [selectedButton, setSelectedButton] = useState(null);
 
-    // CLOSE ALL POPUPS WHEN USER PRESS ESCAPE KEY
-    useEffect(() => {
-        const listener = (e) => {
-            if(e.key === "Escape"){
-                setSelectedButton(null);
-            }
-        };
-        window.addEventListener("keydown", listener);
-
-
-        return () => {
-            window.removeEventListener("keydown", listener);
+  // CLOSE ALL POPUPS WHEN USER PRESS ESCAPE KEY
+  useEffect(() => {
+    const listener = (e) => {
+        if(e.key === "Escape"){
+            setSelectedButton(null);
         }
-
-    }, []);
-// ====================================================================
-
+    };
+    window.addEventListener("keydown", listener);
 
 
+    return () => {
+        window.removeEventListener("keydown", listener);
+    }
+
+  }, []);
+// ========================================
 
 
-// =============================================================================================
-//      Plotting markers on the map (NOT DONE YET, NEED TO WORK ON THE SEE MORE BUTTON)
-// =============================================================================================
+
+
+
+// ========================================
+//  Plotting markers on the map
+// ========================================
     if (infoFromApp.coders && infoFromApp.searchers){
         console.log({infoFromApp})
     }
 
-    //            DO THIS TO PREVENT NULL ERROR
-    // =================================================================
+    //  DO THIS TO PREVENT NULL ERROR
+    // -----------------------------------
     let mapInfo = {
         coders: [],
         searchers: []
     };
-    // =================================================================
+    // -----------------------------------
 
 
-    //      GET INFO FROM PARAMS PASSED INTO HERE FROM APP.JSX
-    // =================================================================
+    //  GET INFO FROM PARAMS PASSED INTO HERE FROM APP.JSX
+    // -----------------------------------
     if(infoFromApp.coders || infoFromApp.searchers){
         mapInfo = infoFromApp;
     };
-    // =================================================================
+    // -----------------------------------
 
 
     // PLOT THE CODERS
     let coders = null
     if(mapInfo.coders[0]){
-        coders =    mapInfo.coders.map(x =>{
-                        if(x.lat){
-                            return  <Marker
-                                        key={x.id}
-                                        latitude={parseFloat(x.lat)}
-                                        longitude={parseFloat(x.long)}
-                                    >
-                                        <button
-                                            className={styles.coders}
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                setSelectedButton(x);
-                                            }}
-                                        >
-                                            <i className='bx bx-code bx-sm align-bottom'></i>
-                                        </button>
-                                    </Marker>
-                        } else {
-                            return null
-                        };
-                    });
+      coders =  mapInfo.coders.map(x =>{
+                  if(x.lat){
+                    return  <Marker
+                              key={x.id}
+                              latitude={parseFloat(x.lat)}
+                              longitude={parseFloat(x.long)}
+                            >
+                              <button
+                                className={styles.coders}
+                                onClick={e => {
+                                    e.preventDefault();
+                                    setSelectedButton(x);
+                                }}
+                              >
+                                <i className='bx bx-code bx-sm align-bottom'></i>
+                              </button>
+                            </Marker>
+                  } else {
+                    return null
+                  };
+                });
     };
 
     // PLOT THE SEARCHERS
     let searchers = null
     if(mapInfo.searchers[0]){
-        searchers = mapInfo.searchers.map(x =>{
-                        if(x.lat){
-                            return  <Marker
-                                        key={x.id}
-                                        latitude={parseFloat(x.lat)}
-                                        longitude={parseFloat(x.long)}
-                                    >
-                                        <button
-                                            className={styles.coders}
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                setSelectedButton(x);
-                                            }}
-                                        >
-                                            <i className='bx bx-search-alt bx-sm align-bottom'></i>
-                                        </button>
-                                    </Marker>
-                        } else {
-                            return null
-                        };
-                    });
+      searchers = mapInfo.searchers.map(x =>{
+                    if(x.lat){
+                      return  <Marker
+                                key={x.id}
+                                latitude={parseFloat(x.lat)}
+                                longitude={parseFloat(x.long)}
+                              >
+                                <button
+                                    className={styles.coders}
+                                    onClick={e => {
+                                        e.preventDefault();
+                                        setSelectedButton(x);
+                                    }}
+                                >
+                                  <i className='bx bx-search-alt bx-sm align-bottom'></i>
+                                </button>
+                              </Marker>
+                    } else {
+                      return null
+                    };
+                  });
     }
 
-// ====================================================================
-
-
-
-// RESULTS ARE SHOWN AND RUN THESE FUNCTIONS IF USER PRESS THE BUTTON SEE MORE
-// ====================================================================
-    const handleClick = function(event){
-        infoFromApp.selectedProfile(event);
-        infoFromApp.showProfile();
-    }
-// ====================================================================
-
+// ========================================
 
 
     return (
